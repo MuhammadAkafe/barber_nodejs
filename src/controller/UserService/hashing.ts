@@ -21,8 +21,8 @@ export default class hashing
     }
   
     // Generate JWT access token
-     generateAccessToken(email: string): string {
-      return jwt.sign({ email }, access_token_key, { algorithm: 'RS256', expiresIn: '15m' });
+     generateAccessToken(data:Record<any,string>):string  {
+      return jwt.sign({ data }, access_token_key, { algorithm: 'RS256', expiresIn: '65m' });
     }
   
     // Generate JWT refresh token

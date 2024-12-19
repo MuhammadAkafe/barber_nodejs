@@ -10,9 +10,10 @@ module.exports = {
       user: 'postgres',
       password: '!postgres!',
       port: 5432,
+      timezone: 'UTC'
     },
     migrations: {
-      directory: `./migrations/functions`, // Directory for migration files
+      directory: `./migrations`, // Directory for migration files
     },
     seeds: {
       directory: './seeds', // Directory for seed files

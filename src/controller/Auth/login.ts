@@ -2,6 +2,16 @@ import { Request, Response } from 'express';
 import hashing from '../UserService/hashing';
 import { Querys } from './../../database/querys/querys';
 
+
+
+
+interface User{
+  id:String | Number
+  email:String,
+  
+  isAdmin:Boolean
+}
+
 export default class Login extends hashing {
   private Query: Querys;
 
@@ -21,9 +31,8 @@ export default class Login extends hashing {
 
       // Check if user exists
       const user = await this.Query.userExists(email);
-
-      if (!user || user.rows.length === 0) {
-        return res.status(401).json({ message: "User not found." });
+      if (!user || user.rows[0].length==0) {
+        return res.status(401).json({ message: "Invalid credentials." });
       }
 
       // Compare hashed password
@@ -36,23 +45,22 @@ export default class Login extends hashing {
       }
 
       // Generate tokens
-      const access_token = this.generateAccessToken(user.rows[0].email);
-      const refresh_token = this.generateRefreshToken(user.rows[0].email);
+      const access_token = this.generateAccessToken(user.rows[0].id);
+       const refresh_token = this.generateRefreshToken(user.rows[0]);
 
-      // Set refresh token as HTTP-only cookie
-      res.cookie("refresh_token", refresh_token, {
+      // // Set refresh token as HTTP-only cookie
+      return res.cookie("refresh_token", refresh_token, {
         httpOnly: true,
-       // secure: process.env.NODE_ENV === "production", // Set to true in production
+       secure: process.env.NODE_ENV === "production", // Set to true in production
         sameSite: "strict",
-      });
-
-      // Respond with success
-      return res.status(200).json({
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      }).status(200).json({
         message: "Login successful.",
         userID: user.rows[0].id,
         access_token,
       });
     } 
+
     catch (error: any) {
       return res.status(500).json({ message: `An error occurred: ${error.message}` });
     }

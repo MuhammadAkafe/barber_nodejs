@@ -7,10 +7,11 @@ export default class AddRole extends QueryService{
     }
     public async AddRole(req: Request, res: Response) {
         try {
-            const { UserId, email,UserName, PhoneNumber, RoleFor, SoltTime, Payment } = req.body;
-            const query = `SELECT add_appointment($1, $2, $3, $4, $5, $6,$7)`;  
+            const { UserId,UserName, PhoneNumber, RoleFor, SoltTime, Payment } = req.body;
+            const query = `SELECT add_appointment($1, $2, $3, $4, $5, $6)`;  
             
-            await this.query(query, [UserId,email, UserName, PhoneNumber, RoleFor, SoltTime, Payment]);
+            console.log(SoltTime);
+            await this.query(query, [UserId, UserName, PhoneNumber, RoleFor, SoltTime, Payment]);
             res.status(200).json({message:"Appointment successfully booked."});
         }
          catch (error:any) {

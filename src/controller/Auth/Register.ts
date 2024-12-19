@@ -10,10 +10,13 @@ export default class Register extends QueryService {
     super();
      this.Hashing=new hashing()
   }
+  
+  
 
   public async AddUser(req: Request, res: Response): Promise<Response<Record<string, string>>> {
     try {
       const { username, password, email, confirm_password, phonenumber, isAdmin } = req.body;
+
 
       // Input validation
       if (!username || !password || !email || !confirm_password || !phonenumber) {
@@ -30,7 +33,9 @@ export default class Register extends QueryService {
 
       // Insert query with hashed password
       const insertQuery = `SELECT Register($1, $2, $3, $4, $5)`;
+
       await this.query(insertQuery, [username, email, phonenumber, hashedPassword, isAdmin]);
+
       return res.status(201).json({ message: "User added successfully" });
       
     } catch (error: any) {

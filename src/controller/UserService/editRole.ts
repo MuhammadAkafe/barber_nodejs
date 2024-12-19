@@ -27,6 +27,7 @@ export default class EditRole extends QueryService {
           if (formattedDate !== CurrentDate) {
             return res.status(400).json({ message: "Enter a valid date" });
           }
+          
           const query = `SELECT update_appointment($1, $2, $3,$4)`;
           await this.query(query, [UserId, RoleFor, SoltTime,Updated_Time]);
       
