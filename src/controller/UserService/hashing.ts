@@ -22,7 +22,7 @@ export default class hashing
   
     // Generate JWT access token
      generateAccessToken(data:Record<any,string>):string  {
-      return jwt.sign({ data }, access_token_key, { algorithm: 'RS256', expiresIn: '65m' });
+      return jwt.sign({ data }, access_token_key, { algorithm: 'RS256', expiresIn: '70m' });
     }
   
     // Generate JWT refresh token

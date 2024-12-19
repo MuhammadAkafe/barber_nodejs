@@ -26,6 +26,7 @@ export default class DeleteRole extends QueryService {
       }
 
       return res.status(200).json({ message: "Appointment successfully deleted." });
+      
     } catch (error: any) {
       // Handle errors and provide detailed feedback
       return res.status(500).json({ message: `Error deleting appointment: ${error.message}` });
