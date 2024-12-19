@@ -3,15 +3,6 @@ import hashing from '../UserService/hashing';
 import { Querys } from './../../database/querys/querys';
 
 
-
-
-interface User{
-  id:String | Number
-  email:String,
-  
-  isAdmin:Boolean
-}
-
 export default class Login extends hashing {
   private Query: Querys;
 
@@ -60,6 +51,8 @@ export default class Login extends hashing {
         access_token,
       });
     } 
+
+
 
     catch (error: any) {
       return res.status(500).json({ message: `An error occurred: ${error.message}` });

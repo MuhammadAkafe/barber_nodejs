@@ -12,11 +12,11 @@ export default class AddRole extends QueryService{
             
             console.log(SoltTime);
             await this.query(query, [UserId, UserName, PhoneNumber, RoleFor, SoltTime, Payment]);
-            res.status(200).json({message:"Appointment successfully booked."});
+           return  res.status(200).json({message:"Appointment successfully booked."});
         }
          catch (error:any) {
             // Handle errors, such as a duplicate slot booking
-            res.status(400).json({message:`Failed to book appointment: ${error.message}`});
+            return res.status(400).json({message:`Failed to book appointment: ${error.message}`});
         }
     }
 }
