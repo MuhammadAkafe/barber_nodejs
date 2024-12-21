@@ -7,16 +7,18 @@ export const authenticateToken = (
   req: Request,
   res: Response,
   next: NextFunction
-): void | Record<string,any> => {
+):  void => {
   const authHeader = req.headers.authorization;
   if (!authHeader) {
-    return res.status(401).json({ message: 'UnAuthorized' });
+     res.status(401).json({ message: 'Unauthorized' });
+     return
   }
 
   const token = authHeader.split(' ')[1];
   jwt.verify(token, process.env.PUBLIC_KEY!, (err) => {
     if (err) {
-      return res.status(401).json({ message: 'Token expired or invalid' });
+       res.status(401).json({ message: 'Token expired or invalid' });
+       return
     }
     next();
   });
@@ -24,22 +26,23 @@ export const authenticateToken = (
 
 // Route handler to refresh the token
 export const RefreshToken = (req: Request, res: Response): Response => {
-  const refreshToken = req.cookies?.refresh_token; // Ensure cookies are present
+  const refreshToken = req.cookies?.refresh_token;
   if (!refreshToken) {
-    return res.status(401).send({ message: 'Invalid refresh token' });
+    return res.status(401).json({ message: 'Invalid refresh token' });
   }
 
-  const Hashing = new hashing();
+  const hashingInstance = new hashing();
+
   try {
     // Verify the refresh token
-    const decodedUser = jwt.verify(refreshToken, process.env.PRIVATE_KEY!) as JwtPayload;
+    const decoded = jwt.verify(refreshToken, process.env.PRIVATE_KEY!) as JwtPayload;
 
     // Generate a new access token
-    const newAccessToken = Hashing.generateAccessToken(decodedUser.id); // Assuming `generateAccessToken` expects user ID
-    return res.json({ accessToken: newAccessToken }); // Send the new access token to the client
-  } 
-  catch (err) {
-    console.error('Refresh token error:', err);
-    return res.status(403).send({ message: 'Invalid refresh token' });
+    const newAccessToken = hashingInstance.generateAccessToken(decoded.id);
+
+    return res.json({ accessToken: newAccessToken });
+  } catch (err) {
+    console.error('Error verifying refresh token:', err);
+    return res.status(403).json({ message: 'Invalid refresh token' });
   }
 };
