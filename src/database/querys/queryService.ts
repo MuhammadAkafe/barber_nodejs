@@ -7,7 +7,7 @@ export class QueryService extends PostgreSqlConnection
     {
         super()
     }
-    async query(queryText: string, values: any[]): Promise<any> {
+    async query(queryText: string, values?: any[]): Promise<any> {
         const client: PoolClient = await this.pool.connect(); // Get a client from the pool
         try {
             const result = await client.query(queryText, values);

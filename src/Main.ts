@@ -8,7 +8,16 @@ dotenv.config();
 const app = express();
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }));
-app.use(cors())
+
+
+app.use(
+    cors({
+      origin: 'http://localhost:3000', // Replace with your frontend's origin
+      credentials: true, // Allow credentials (cookies)
+    })
+  );
+
+  
 
 // Middleware to parse JSON
 app.use(express.json());

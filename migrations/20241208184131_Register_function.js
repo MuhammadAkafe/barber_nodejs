@@ -12,11 +12,7 @@ exports.up = function(knex) {
       ) RETURNS VOID AS $$
       BEGIN
           -- Check if there is an existing user
-          IF EXISTS (
-              SELECT 1
-              FROM users
-              WHERE email = _email
-          ) THEN
+          IF  check_if_User_exists(_email) THEN
               RAISE EXCEPTION 'User already exists';
           ELSE
               -- Insert the user if not already registered

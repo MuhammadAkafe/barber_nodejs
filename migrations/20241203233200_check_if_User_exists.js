@@ -1,13 +1,13 @@
 exports.up = function (knex) {
     return knex.raw(`
-      CREATE OR REPLACE FUNCTION check_if_UserID_exists(
-          _user_id INT
+      CREATE OR REPLACE FUNCTION check_if_User_exists(
+          _email varchar(100)
       ) RETURNS BOOLEAN AS $$
       BEGIN
           IF EXISTS (
               SELECT 1
-              FROM appointments
-              WHERE id = _user_id
+              FROM users
+              WHERE email = _email
           ) THEN
               RETURN TRUE;
           ELSE
@@ -20,7 +20,7 @@ exports.up = function (knex) {
   
   exports.down = function (knex) {
     return knex.raw(`
-      DROP FUNCTION IF EXISTS check_if_UserID_exists(int);
+      DROP FUNCTION IF EXISTS check_if_User_exists(varchar);
     `);
   };
   
