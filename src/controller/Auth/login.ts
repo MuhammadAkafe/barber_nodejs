@@ -1,22 +1,20 @@
 import { Request, Response } from 'express';
-import bcryptpasswordHandler from '../UserService/bcryptpasswordHandler';
+import bcryptPasswordHandler from '../UserService/bcryptpasswordHandler';
 import { Querys } from './../../database/querys/querys';
 import tokenHandler from '../UserService/TokenHandler';
 
 export default class Login extends tokenHandler {
   private Query: Querys;
-  private Hashing:bcryptpasswordHandler
+  private PasswordHandler:bcryptPasswordHandler
   constructor() {
     super();
     this.Query = new Querys();
-    this.Hashing=new bcryptpasswordHandler();
+    this.PasswordHandler=new bcryptPasswordHandler();
   }
 
   public async Login(req: Request, res: Response): Promise<Response> {
     try {
       const { email, password } = req.body;
-      console.log(req.body);
-      // Validate request body
       if (!email || !password) {
         return res.status(400).json({ message: "Email and password are required." });
       }
@@ -29,23 +27,24 @@ export default class Login extends tokenHandler {
 
       // Compare hashed password
       const hashedPassword = user.rows[0].password;
-      const isMatch = await this.Hashing.comparePasswords(password, hashedPassword);
+      const isMatch = await this.PasswordHandler.comparePasswords(password, hashedPassword);
 
       if (!isMatch) {
         return res.status(401).json({ message: "Invalid credentials." });
       }
-        const access_token = this.generateAccessToken({id:user.rows[0].id});
-        const refresh_token = this.generateRefreshToken({id:user.rows[0].id});
+        const UserID=user.rows[0].id
+        const access_token = this.generateAccessToken({id:UserID});
+        const refresh_token = this.generateRefreshToken({id:UserID});
 
         // Set refresh token as HTTP-only cookie
-        return res.cookie("refresh_token", refresh_token, {
+        return res.cookie("refreshToken", refresh_token, {
           httpOnly: true,
-         // secure: process.env.NODE_ENV === "production", // Set to true in production
+         secure: true, // Set to true in production
           sameSite: "strict",
-          maxAge: 60 * 1000,
+          maxAge: 5*60 * 1000,
         }).status(200).json({
           message: "Login successful.",
-          userID: user.rows[0].id,
+          userID: UserID,
           access_token,
         });
     }

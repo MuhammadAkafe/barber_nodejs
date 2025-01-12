@@ -8,7 +8,7 @@ dotenv.config();
 
 
 
-export default class bcryptpasswordHandler 
+export default class bcryptPasswordHandler 
 {
     async hashPassword(password: string): Promise<string> {
       return bcrypt.hash(password, 10);

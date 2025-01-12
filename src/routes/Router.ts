@@ -30,9 +30,10 @@ class AuthRouter {
   private initializeRoutes() {
     this.router.post('/Register', (req: Request, res: Response) => {this.Register.AddUser(req, res)});
     this.router.post('/Login', (req: Request, res: Response) => {this.login.Login(req, res)});
-    this.router.post('/RefreshToken', (req: Request, res: Response) =>{RefreshToken(req,res)});
+   this.router.post('/RefreshToken', (req: Request, res: Response) =>{RefreshToken(req,res)});
     this.router.delete('/DeleteAllUsers', (req: Request, res: Response) => {this.DeleteAllUsers.DeleteAllUsers(req, res)});
     this.router.use(authenticateToken); // Apply authentication middleware for the routes below
+ //   this.router.post('/RefreshToken', (req: Request, res: Response) =>{RefreshToken(req,res)});
     this.router.post('/AddRole', (req: Request, res: Response) => {this.AddRole.AddRole(req, res)});
     this.router.patch('/EditRole', (req: Request, res: Response) => {this.EditRole.EditRole(req, res)});
     this.router.delete('/DeleteRole', (req: Request, res: Response) => {this.deleteRole.DeleteRole(req, res)});

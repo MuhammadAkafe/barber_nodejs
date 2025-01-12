@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
 import {QueryService} from "../../database/querys/queryService"; // Assuming queryService is your base class for querying the database.
-import bcryptpasswordHandler from "../UserService/bcryptpasswordHandler";
+import bcryptPasswordHandler from "../UserService/bcryptpasswordHandler";
 
 
 
 export default class Register extends QueryService {
-  private Hashing:bcryptpasswordHandler
+  private Hashing:bcryptPasswordHandler
   constructor() {
     super();
-     this.Hashing=new bcryptpasswordHandler()
+     this.Hashing=new bcryptPasswordHandler()
   }
   
   
