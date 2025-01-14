@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import bcryptPasswordHandler from '../UserService/bcryptpasswordHandler';
-import { Querys } from './../../database/querys/querys';
-import tokenHandler from '../UserService/TokenHandler';
+import bcryptPasswordHandler from '../brcypt/bcryptpasswordHandler';
+import { Querys } from '../../database/querys/checkIfUserExists';
+import tokenHandler from '../jwt/jwtTokenHandler';
 
 export default class Login extends tokenHandler {
   private Query: Querys;

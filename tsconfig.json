@@ -8,6 +8,6 @@
     "allowSyntheticDefaultImports": true, 
     "strict": true
   },
-  "include": ["src/**/*.ts", "src/controller/UserService/bcryptpasswordHandler.ts"],
+  "include": ["src/**/*.ts", "src/controller/brcypt/bcryptpasswordHandler.ts"],
   "exclude": ["node_modules", "build"]
 }

@@ -10,5 +10,4 @@ constructor(){
         const user = await this.query(userQuery, [email]);
         return user.rows.length > 0 ? user : null;
       }
-      
 }

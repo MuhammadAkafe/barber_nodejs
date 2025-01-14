@@ -14,7 +14,7 @@ export class PostgreSqlConnection  {
         });
         console.log('PostgreSQL connection pool created');
     }
-
+    
     async disconnect(): Promise<void> 
     {
         // This should be called when the application is shutting down

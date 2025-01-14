@@ -9,8 +9,6 @@ export default class AddRole extends QueryService{
         try {
             const { UserId,UserName, PhoneNumber, RoleFor, SoltTime, Payment } = req.body;
             const query = `SELECT add_appointment($1, $2, $3, $4, $5, $6)`;  
-            
-            console.log(SoltTime);
             await this.query(query, [UserId, UserName, PhoneNumber, RoleFor, SoltTime, Payment]);
            return  res.status(200).json({message:"Appointment successfully booked."});
         }

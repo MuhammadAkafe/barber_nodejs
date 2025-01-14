@@ -1,5 +1,5 @@
 import { Response,Request } from "express"
-import bcryptPasswordHandler from "./bcryptpasswordHandler";
+import bcryptPasswordHandler from "../brcypt/bcryptpasswordHandler";
 import { QueryService } from "../../database/querys/queryService";
 
 export default class EditRole extends QueryService {

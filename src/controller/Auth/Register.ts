@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import {QueryService} from "../../database/querys/queryService"; // Assuming queryService is your base class for querying the database.
-import bcryptPasswordHandler from "../UserService/bcryptpasswordHandler";
+import bcryptPasswordHandler from "../brcypt/bcryptpasswordHandler";
 
 
 

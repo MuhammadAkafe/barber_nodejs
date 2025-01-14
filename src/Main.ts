@@ -1,8 +1,10 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import  AuthRouter  from './routes/Router';
+import  AuthRouter  from './routes/AuthRouter';
 import cors from 'cors'
 import cookieParser from 'cookie-parser';
+import UserRouter from './routes/UserRouter';
+import { AdminRouter } from './routes/AdminRouter';
 dotenv.config();
 
 const app = express();
@@ -17,14 +19,18 @@ app.use(
     })
   );
 
-  
+
 
 // Middleware to parse JSON
 app.use(express.json());
 
-const auth = new AuthRouter();
+const authRouter = new AuthRouter();
+const userRouter=new UserRouter()
+const Adminrouter=new AdminRouter()
 
-app.use(auth.router);
+app.use(authRouter.router);
+app.use(userRouter.router);
+app.use(Adminrouter.router);
 
 
 
