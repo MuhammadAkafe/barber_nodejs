@@ -1,7 +1,4 @@
-import { Response,Request } from "express"
-import { QueryService } from "../../database/querys/queryService";
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
 

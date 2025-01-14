@@ -1,7 +1,7 @@
 import express, { Router, Request, Response } from 'express';
 import Login from '../controller/Auth/login';
-import { authenticateToken } from '../middleWares/Token';
-import { RefreshToken } from '../middleWares/Refresh_token';
+import { authenticateToken } from '../controller/jwt/Token';
+import { RefreshToken } from '../controller/jwt/Refresh_token';
 import Register from '../controller/Auth/Register';
 
 class AuthRouter {
@@ -9,6 +9,7 @@ class AuthRouter {
   private Register: Register;
   private login: Login;
 
+  
   constructor() {
     this.router = express.Router();
     this.Register = new Register();
@@ -20,7 +21,7 @@ class AuthRouter {
     this.router.post('/Register', (req: Request, res: Response) => {this.Register.AddUser(req, res)});
     this.router.post('/Login', (req: Request, res: Response) => {this.login.Login(req, res)});
    this.router.post('/RefreshToken', (req: Request, res: Response) =>{RefreshToken(req,res)});
-    this.router.use(authenticateToken);
+ 
 
   }
 }

@@ -1,6 +1,6 @@
-import { QueryService } from "./queryService";
+import { GlobalQuery } from "./GlobalQuery";
 
-export class Querys extends QueryService {
+export class CheckifUserExists extends GlobalQuery {
 constructor(){
     super()
 }

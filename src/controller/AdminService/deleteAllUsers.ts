@@ -1,9 +1,9 @@
 import { Response, Request } from "express";
-import { QueryService } from "../../database/querys/queryService";
+import { GlobalQuery } from "../../database/querys/GlobalQuery";
 import { json } from "body-parser";
 
 
-export default class DeleteAllUsers extends QueryService {
+export default class DeleteAllUsers extends GlobalQuery {
   constructor() {
     super();
   }

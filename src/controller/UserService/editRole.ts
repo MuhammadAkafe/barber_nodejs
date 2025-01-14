@@ -1,8 +1,8 @@
 import { Response,Request } from "express"
 import bcryptPasswordHandler from "../brcypt/bcryptpasswordHandler";
-import { QueryService } from "../../database/querys/queryService";
+import { GlobalQuery } from "../../database/querys/GlobalQuery";
 
-export default class EditRole extends QueryService {
+export default class EditRole extends GlobalQuery {
     constructor()
     {
         super()

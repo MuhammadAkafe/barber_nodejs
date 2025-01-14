@@ -1,14 +1,14 @@
 import { Request, Response } from 'express';
 import bcryptPasswordHandler from '../brcypt/bcryptpasswordHandler';
-import { Querys } from '../../database/querys/checkIfUserExists';
+import { CheckifUserExists } from '../../database/querys/checkIfUserExists';
 import tokenHandler from '../jwt/jwtTokenHandler';
 
 export default class Login extends tokenHandler {
-  private Query: Querys;
+  private Query: CheckifUserExists;
   private PasswordHandler:bcryptPasswordHandler
   constructor() {
     super();
-    this.Query = new Querys();
+    this.Query = new CheckifUserExists();
     this.PasswordHandler=new bcryptPasswordHandler();
   }
 

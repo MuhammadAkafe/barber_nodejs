@@ -1,7 +1,7 @@
 import { Response, Request } from "express";
-import { QueryService } from "../../database/querys/queryService";
+import { GlobalQuery } from "../../database/querys/GlobalQuery";
 
-export default class DeleteRole extends QueryService {
+export default class DeleteRole extends GlobalQuery {
   constructor() {
     super();
   }

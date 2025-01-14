@@ -1,6 +1,6 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { Request, Response } from 'express';
-import TokenHandler from '../controller/jwt/jwtTokenHandler';
+import TokenHandler from './jwtTokenHandler';
 
 export const RefreshToken = (req: Request, res: Response): Response => {
     try {

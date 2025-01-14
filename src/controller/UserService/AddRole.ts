@@ -1,6 +1,6 @@
 import { Response,Request } from "express"
-import { QueryService } from "../../database/querys/queryService";
-export default class AddRole extends QueryService{
+import { GlobalQuery } from "../../database/querys/GlobalQuery";
+export default class AddRole extends GlobalQuery{
     constructor()
     {
         super()

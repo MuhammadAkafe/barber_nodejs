@@ -1,6 +1,5 @@
-import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-import tokenHandler from '../controller/jwt/jwtTokenHandler';
+import tokenHandler from './jwtTokenHandler';
 
 export const authenticateToken = (req: Request, res: Response, next: NextFunction): void => {
   try {

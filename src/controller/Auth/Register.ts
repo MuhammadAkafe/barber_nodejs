@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import {QueryService} from "../../database/querys/queryService"; // Assuming queryService is your base class for querying the database.
+import {GlobalQuery} from "../../database/querys/GlobalQuery"; // Assuming queryService is your base class for querying the database.
 import bcryptPasswordHandler from "../brcypt/bcryptpasswordHandler";
 
 
 
-export default class Register extends QueryService {
+export default class Register extends GlobalQuery {
   private Hashing:bcryptPasswordHandler
   constructor() {
     super();

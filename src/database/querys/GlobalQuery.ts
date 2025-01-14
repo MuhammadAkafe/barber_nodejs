@@ -1,7 +1,7 @@
 import { PoolClient } from "pg"
 import { PostgreSqlConnection  } from "../connections/pgconnection"
 
-export class QueryService extends PostgreSqlConnection
+export class GlobalQuery extends PostgreSqlConnection
 {
     constructor()
     {
