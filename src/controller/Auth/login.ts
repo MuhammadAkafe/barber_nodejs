@@ -4,11 +4,11 @@ import { CheckifUserExists } from '../../database/querys/checkIfUserExists';
 import tokenHandler from '../jwt/jwtTokenHandler';
 
 export default class Login extends tokenHandler {
-  private Query: CheckifUserExists;
+  private CheckifUserExists: CheckifUserExists;
   private PasswordHandler:bcryptPasswordHandler
   constructor() {
     super();
-    this.Query = new CheckifUserExists();
+    this.CheckifUserExists = new CheckifUserExists();
     this.PasswordHandler=new bcryptPasswordHandler();
   }
 
@@ -20,19 +20,19 @@ export default class Login extends tokenHandler {
       }
 
       // Check if user exists
-      const user = await this.Query.userExists(email);
-      if (!user || !user.rows[0]) {
+      const userExists = await this.CheckifUserExists.userExists(email);
+      if (!userExists || !userExists.rows[0]) {
         return res.status(401).json({ message: "Invalid credentials." });
       }
 
       // Compare hashed password
-      const hashedPassword = user.rows[0].password;
+      const hashedPassword = userExists.rows[0].password;
       const isMatch = await this.PasswordHandler.comparePasswords(password, hashedPassword);
 
       if (!isMatch) {
         return res.status(401).json({ message: "Invalid credentials." });
       }
-        const UserID=user.rows[0].id
+        const UserID=userExists.rows[0].id
         const access_token = this.generateAccessToken({id:UserID});
         const refresh_token = this.generateRefreshToken({id:UserID});
 

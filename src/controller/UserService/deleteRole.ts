@@ -21,7 +21,8 @@ export default class DeleteRole extends GlobalQuery {
 
       // Check the result
       const success = result.rows[0]?.success;
-      if (!success) {
+      if (!success) 
+        {
         return res.status(404).json({ message: "No appointment found to delete." });
       }
 

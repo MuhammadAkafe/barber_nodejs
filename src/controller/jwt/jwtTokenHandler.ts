@@ -7,8 +7,8 @@ export default class tokenHandler {
   private readonly PUBLIC_KEY: string;
 
   constructor() {
-    this.accessTokenOptions = { algorithm: "RS256", expiresIn: "30s" };
-    this.refreshTokenOptions = { algorithm: "RS256", expiresIn: "1h" };
+    this.accessTokenOptions = { algorithm: "RS256", expiresIn: "7d" };
+    this.refreshTokenOptions = { algorithm: "RS256", expiresIn: "7d" };
 
     // Ensure the keys are properly formatted (replace escaped newlines if present)
     if (!process.env.PRIVATE_KEY || !process.env.PUBLIC_KEY) 

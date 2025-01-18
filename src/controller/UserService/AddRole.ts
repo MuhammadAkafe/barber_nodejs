@@ -12,7 +12,8 @@ export default class AddRole extends GlobalQuery{
             await this.query(query, [UserId, UserName, PhoneNumber, RoleFor, SoltTime, Payment]);
            return  res.status(200).json({message:"Appointment successfully booked."});
         }
-         catch (error:any) {
+         catch (error:any) 
+         {
             // Handle errors, such as a duplicate slot booking
             return res.status(400).json({message:`Failed to book appointment: ${error.message}`});
         }

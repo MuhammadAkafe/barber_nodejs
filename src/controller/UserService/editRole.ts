@@ -24,7 +24,8 @@ export default class EditRole extends GlobalQuery {
           const formattedDate = this.getCurrentFormattedDate();
       
           // Validate the provided date
-          if (formattedDate !== CurrentDate) {
+          if (formattedDate !== CurrentDate) 
+            {
             return res.status(400).json({ message: "Enter a valid date" });
           }
           
