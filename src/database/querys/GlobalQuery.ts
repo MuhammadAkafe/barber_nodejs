@@ -7,14 +7,15 @@ export class GlobalQuery extends PostgreSqlConnection {
   }
 
   async query(queryText: string, values?: any[]): Promise<any> {
-    const client: PoolClient = await this.pool.connect(); // Get a client from the pool
+    const client: PoolClient = await this.pool.connect();
     try {
       return await client.query(queryText, values);
-    } catch (err) {
+    } 
+    catch (err) {
       console.error('Database query error:', err);
       throw err;
     } finally {
-      client.release(); // Return the client to the pool
+      client.release();
     }
   }
 }

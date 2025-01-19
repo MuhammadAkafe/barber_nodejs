@@ -18,21 +18,21 @@ export default class Login extends tokenHandler {
       if (!email || !password) {
         return res.status(400).json({ message: "Email and password are required." });
       }
-
       // Check if user exists
-      const userExists = await this.CheckifUserExists.userExists(email);
-      if (!userExists || !userExists.rows[0]) {
+      const user = await this.CheckifUserExists.userExists(email);
+      if (!user || !user.rows[0]) {
         return res.status(401).json({ message: "Invalid credentials." });
       }
+      const phonenumber=user.rows[0].phonenumber;
 
       // Compare hashed password
-      const hashedPassword = userExists.rows[0].password;
+      const hashedPassword = user.rows[0].password;
       const isMatch = await this.PasswordHandler.comparePasswords(password, hashedPassword);
 
       if (!isMatch) {
         return res.status(401).json({ message: "Invalid credentials." });
       }
-        const UserID=userExists.rows[0].id
+        const UserID=user.rows[0].userid
         const access_token = this.generateAccessToken({id:UserID});
         const refresh_token = this.generateRefreshToken({id:UserID});
 
@@ -45,7 +45,10 @@ export default class Login extends tokenHandler {
         }).status(200).json({
           message: "Login successful.",
           userID: UserID,
+          phoneNumber:phonenumber,
           access_token,
+          userName: user.rows[0].username,
+          isAdmin: user.rows[0].isadmin
         });
     }
      catch (error: any) 

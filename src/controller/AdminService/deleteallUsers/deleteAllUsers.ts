@@ -1,12 +1,14 @@
 import { Response, Request } from "express";
-import { GlobalQuery } from "../../database/querys/GlobalQuery";
+import { GlobalQuery } from "../../../database/querys/GlobalQuery";
 import { json } from "body-parser";
 
 
-export default class DeleteAllUsers extends GlobalQuery {
+export default class DeleteAllUsers extends GlobalQuery 
+{
   constructor() {
     super();
   }
+  
 
   public async DeleteAllUsers(req: Request, res: Response): Promise<Response> {
     try {

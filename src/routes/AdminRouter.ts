@@ -1,5 +1,5 @@
 import { Admin } from "../interfaces/Admin";
-import DeleteAllUsers from '../controller/AdminService/deleteAllUsers';
+import DeleteAllUsers from '../controller/AdminService/deleteallUsers/deleteAllUsers';
 import express, { Router, Request, Response } from 'express';
 export class AdminRouter implements Admin
 {

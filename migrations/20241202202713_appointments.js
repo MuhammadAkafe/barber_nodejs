@@ -5,14 +5,13 @@
 exports.up = function(knex) {
   return knex.schema.createTable('appointments', function(table) 
   {
-      table.integer('id');
-      table.string('username', 100).notNullable();
+      table.integer('userid').unsigned().notNullable();
+      table.string('userName', 100).notNullable();
       table.string('city', 100).notNullable();
-      table.string('barberName', 100).notNullable();
-      table.string('phonenumber', 100).notNullable();
-      table.string('rolefor', 100).notNullable();
-      table.timestamp('slot_time', { useTz: false }).unique().notNullable(); // Disable timezone
-      table.string('payment', 100);
+      table.string('barber', 100).notNullable();
+      table.string('phoneNumber', 100).notNullable();
+      table.string('roleFor', 100).notNullable();
+      table.timestamp('date', { useTz: false }).unique().notNullable(); // Disable timezone
   });
 };
 

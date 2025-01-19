@@ -1,27 +1,28 @@
 exports.up = function (knex) {
   return knex.raw(`
 CREATE OR REPLACE FUNCTION add_appointment(
-    _user_id INT,
-    _username VARCHAR(100),
-    _phonenumber VARCHAR(100),
-    _rolefor VARCHAR(100),
-    _slot_time TIMESTAMP, -- تأكيد أن الإدخال يتم كـ TIMESTAMP
-    _payment VARCHAR(100)
+    _userID INT,
+    _userName VARCHAR(100),
+    _date TIMESTAMP,
+    _city VARCHAR(100),
+    _barber VARCHAR(100),
+    _phoneNumber VARCHAR(100),
+    _roleFor VARCHAR(100)
+    -- تأكيد أن الإدخال يتم كـ TIMESTAMP
 ) RETURNS VOID AS $$
 BEGIN
-    -- التحقق من صحة التاريخ
-    IF NOT validate_appointment_date(_slot_time) THEN
-        RAISE EXCEPTION 'Enter a valid date';
-    END IF;
+
+
+
 
     -- التحقق من توفر الفترة الزمنية
-    IF check_slot_availability(_user_id, _slot_time) THEN
+    IF check_slot_availability(_userID,_date) THEN
         RAISE EXCEPTION 'This time slot is already booked';
     END IF;
 
     -- إدخال الموعد إذا كان كل شيء صحيحًا
-    INSERT INTO appointments (id, username, phonenumber, rolefor, slot_time, payment)
-    VALUES (_user_id, _username, _phonenumber, _rolefor, _slot_time::TIMESTAMP, _payment);
+    INSERT INTO appointments (userID, userName, date, city, barber, phoneNumber, roleFor)
+    VALUES (_userID, _userName, _date, _city, _barber, _phoneNumber, _roleFor);
 END;
 $$ LANGUAGE plpgsql;
   `);
@@ -29,6 +30,6 @@ $$ LANGUAGE plpgsql;
 
 exports.down = function (knex) {
   return knex.raw(`
-      DROP FUNCTION IF EXISTS add_appointment(int, VARCHAR, VARCHAR, VARCHAR, TIMESTAMP, VARCHAR);
+      DROP FUNCTION IF EXISTS add_appointment(int, VARCHAR,TIMESTAMP,VARCHAR, VARCHAR, VARCHAR);
   `);
 };
