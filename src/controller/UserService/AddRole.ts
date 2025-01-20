@@ -23,13 +23,10 @@ export default class AddRole extends GlobalQuery {
             if (!userID || !userName || !phoneNumber || !city || !barber || !roleFor || !date) {
                 return res.status(400).json({ message: "All fields are required." });
             }
-            const formattedDate = dayjs(date).isValid() ? dayjs(date).format('YYYY-MM-DD HH:mm') : null;
-            if (!formattedDate) {
-                return res.status(400).json({ message: "Invalid date format." });
-            }
+           
             const query = `SELECT add_appointment($1, $2, $3, $4, $5, $6,$7)`;
-            
-            await this.query(query, [userID, userName, formattedDate, city, barber, phoneNumber, roleFor]);
+
+            await this.query(query, [userID, userName, date, city, barber, phoneNumber, roleFor]);
             return res.status(200).json({ message: "Appointment successfully booked." });
         } catch (error: any) {
             console.error(error);
