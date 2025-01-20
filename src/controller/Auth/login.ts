@@ -20,6 +20,9 @@ export default class Login extends tokenHandler {
       }
       // Check if user exists
       const user = await this.CheckifUserExists.userExists(email);
+
+
+      
       if (!user || !user.rows[0]) {
         return res.status(401).json({ message: "Invalid credentials." });
       }

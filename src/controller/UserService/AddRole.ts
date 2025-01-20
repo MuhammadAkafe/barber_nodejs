@@ -17,10 +17,12 @@ export default class AddRole extends GlobalQuery {
         super();
     }
 
-    public async AddRole(req: Request, res: Response) {
+    public async AddRole(req: Request, res: Response) 
+    {
         try {
             const { userID, userName, phoneNumber, city, barber, roleFor, date }: RoleData = req.body;
-            if (!userID || !userName || !phoneNumber || !city || !barber || !roleFor || !date) {
+            if (!userID || !userName || !phoneNumber || !city || !barber || !roleFor || !date) 
+                {
                 return res.status(400).json({ message: "All fields are required." });
             }
            

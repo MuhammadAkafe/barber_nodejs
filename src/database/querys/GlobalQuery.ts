@@ -11,10 +11,12 @@ export class GlobalQuery extends PostgreSqlConnection {
     try {
       return await client.query(queryText, values);
     } 
-    catch (err) {
+    catch (err) 
+    {
       console.error('Database query error:', err);
       throw err;
-    } finally {
+    } 
+    finally {
       client.release();
     }
   }
