@@ -8,12 +8,12 @@ dotenv.config();
 export default class bcryptPasswordHandler 
 {
     async hashPassword(password: string): Promise<string> {
-      return bcrypt.hash(password, 10);
+      return await bcrypt.hash(password, 10)
     }
   
     // Compare passwords
      async comparePasswords(password: string, hashedPassword: string): Promise<boolean> {
-      return bcrypt.compare(password, hashedPassword);
+      return await bcrypt.compare(password, hashedPassword);
     }
   
 }

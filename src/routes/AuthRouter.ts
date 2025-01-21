@@ -21,8 +21,6 @@ class AuthRouter {
     this.router.post('/Register', (req: Request, res: Response) => {this.Register.AddUser(req, res)});
     this.router.post('/Login', (req: Request, res: Response) => {this.login.Login(req, res)});
    this.router.post('/RefreshToken', (req: Request, res: Response) =>{RefreshToken(req,res)});
- 
-
   }
 }
 

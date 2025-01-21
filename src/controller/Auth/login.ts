@@ -1,31 +1,37 @@
 import { Request, Response } from 'express';
 import bcryptPasswordHandler from '../brcypt/bcryptpasswordHandler';
-import { CheckifUserExists } from '../../database/querys/checkIfUserExists';
+import { CheckifUserExists } from '../../database/querys/checkIfUserExistsQuery';
 import tokenHandler from '../jwt/jwtTokenHandler';
 
-export default class Login extends tokenHandler {
+export default class Login extends tokenHandler 
+{
   private CheckifUserExists: CheckifUserExists;
   private PasswordHandler:bcryptPasswordHandler
-  constructor() {
+  constructor() 
+  {
     super();
     this.CheckifUserExists = new CheckifUserExists();
     this.PasswordHandler=new bcryptPasswordHandler();
   }
 
-  public async Login(req: Request, res: Response): Promise<Response> {
+  public async Login(req: Request, res: Response): Promise<Response> 
+  {
     try {
       const { email, password } = req.body;
-      if (!email || !password) {
+      if (!email || !password) 
+        {
         return res.status(400).json({ message: "Email and password are required." });
-      }
+        }
+
+
       // Check if user exists
       const user = await this.CheckifUserExists.userExists(email);
 
-
-      
       if (!user || !user.rows[0]) {
         return res.status(401).json({ message: "Invalid credentials." });
       }
+
+
       const phonenumber=user.rows[0].phonenumber;
 
       // Compare hashed password
@@ -35,6 +41,9 @@ export default class Login extends tokenHandler {
       if (!isMatch) {
         return res.status(401).json({ message: "Invalid credentials." });
       }
+
+
+
         const UserID=user.rows[0].userid
         const access_token = this.generateAccessToken({id:UserID});
         const refresh_token = this.generateRefreshToken({id:UserID});

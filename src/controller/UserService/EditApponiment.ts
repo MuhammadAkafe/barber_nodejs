@@ -1,13 +1,7 @@
 import { Response,Request } from "express"
-import bcryptPasswordHandler from "../brcypt/bcryptpasswordHandler";
-import { GlobalQuery } from "../../database/querys/GlobalQuery";
 
-export default class EditRole extends GlobalQuery {
-    constructor()
-    {
-        super()
-    }
-    async EditRole(req: Request, res: Response): Promise<Response<any>> {
+
+    export async function  EditApponiment(req: Request, res: Response): Promise<Response<any>> {
         try {
           const { UserId, RoleFor, SoltTime,Updated_Time } = req.body;
           
@@ -21,7 +15,7 @@ export default class EditRole extends GlobalQuery {
           const [CurrentDate, Time] = SoltTime.split(" ");
       
           // Get the current date formatted as DD/MM/YYYY
-          const formattedDate = this.getCurrentFormattedDate();
+          const formattedDate = getCurrentFormattedDate();
       
           // Validate the provided date
           if (formattedDate !== CurrentDate) 
@@ -30,16 +24,20 @@ export default class EditRole extends GlobalQuery {
           }
           
           const query = `SELECT update_appointment($1, $2, $3,$4)`;
-          await this.query(query, [UserId, RoleFor, SoltTime,Updated_Time]);
+          //await query(query, [UserId, RoleFor, SoltTime,Updated_Time]);
       
           return res.status(200).json({ message: "Appointment successfully updated." });
         } 
-        catch (error: any) {
+        catch (error: any) 
+        {
           // Handle errors and send a failure response
           return res.status(400).json({ message: `Failed to update appointment: ${error.message}` });
         }
       }
-      public getCurrentFormattedDate(): string 
+
+
+
+      function getCurrentFormattedDate(): string 
       {
           const today = new Date();
           const day = String(today.getDate()).padStart(2, '0');
@@ -47,5 +45,3 @@ export default class EditRole extends GlobalQuery {
           const year = today.getFullYear();
           return `${day}/${month}/${year}`;
       }
-
-}

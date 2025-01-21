@@ -1,32 +1,22 @@
 import { User } from '../interfaces/User';
-import AddRole from '../controller/UserService/AddRole';
-import EditRole from '../controller/UserService/editRole';
-import DeleteRole from '../controller/UserService/deleteRole';
 import express, { Router, Request, Response } from 'express';
-
-
+import {Add_Apponiment} from '../controller/UserService/Add_Apponiment';
+import { EditApponiment } from '../controller/UserService/EditApponiment';
+import { DeleteApponiment } from '../controller/UserService/DeleteApponiment';
 
 
 export default class  UserRouter implements User  
 {
-    public router:Router;
-    private AddRole:AddRole;
-    private EditRole:EditRole;
-    private deleteRole:DeleteRole;
+    router:Router
     constructor()
     {
         this.router = express.Router();
-        this.AddRole = new AddRole();
-        this.EditRole = new EditRole();
-        this.deleteRole = new DeleteRole();
         this.initializeRoutes();
     }
     initializeRoutes(){
         //this.router.use(authenticateToken);
-        this.router.post('/AddRole', (req: Request, res: Response) => {this.AddRole.AddRole(req, res)});
-        this.router.patch('/EditRole', (req: Request, res: Response) => {this.EditRole.EditRole(req, res)});
-        this.router.delete('/DeleteRole', (req: Request, res: Response) => {this.deleteRole.DeleteRole(req, res)});
+        this.router.post('/AddApponiment',  (req: Request, res: Response) =>{Add_Apponiment(req, res)});
+        this.router.patch('/EditApponiment', (req: Request, res: Response) => {EditApponiment(req, res)});
+        this.router.delete('/DeleteApponiment', (req: Request, res: Response) => {DeleteApponiment(req, res)});
     }
-
-
 }

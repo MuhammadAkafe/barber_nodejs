@@ -1,21 +1,26 @@
 import { Request, Response } from "express";
 import {GlobalQuery} from "../../database/querys/GlobalQuery"; // Assuming queryService is your base class for querying the database.
 import bcryptPasswordHandler from "../brcypt/bcryptpasswordHandler";
-
+import {CheckifUserExists} from "../../database/querys/checkIfUserExistsQuery";
+import AddUser from "../../database/querys/AddUserQuery";
 
 
 export default class Register extends GlobalQuery {
   private Hashing:bcryptPasswordHandler
+  private checkifUserExists: CheckifUserExists;
+  private addUser:AddUser
   constructor() {
     super();
      this.Hashing=new bcryptPasswordHandler()
+      this.checkifUserExists=new CheckifUserExists()
+      this.addUser=new AddUser()
   }
   
   
 
   public async AddUser(req: Request, res: Response): Promise<Response<Record<string, string>>> {
     try {
-      const { username, password, email, confirm_password, phonenumber, isAdmin } = req.body;
+      const { username, password, email, confirm_password, phonenumber, isAdmin }= req.body;
   
       // Input validation
       if (!username || !password || !email || !confirm_password || !phonenumber) {
@@ -30,17 +35,18 @@ export default class Register extends GlobalQuery {
       // Hash the password
       const hashedPassword = await this.Hashing.hashPassword(password);
   
-      // Check if the user already exists
-      const query = `SELECT check_if_User_exists($1)`;
-      const isExists = await this.query(query, [email]);
-      if (isExists.rows[0].check_if_user_exists) 
+      const UserExist=await this.checkifUserExists.userExists(email)
+      if (UserExist) 
         { // Assuming the function returns a boolean
         return res.status(409).json({ message: "User already exists"}); // 409 for conflict
       }
-  
-      // Insert the new user
-      const insertQuery = `SELECT Register($1, $2, $3, $4, $5)`;
-      await this.query(insertQuery, [username, email, phonenumber, hashedPassword, isAdmin]);
+
+      const result=this.addUser.addUser({username, email, phonenumber, hashedPassword, isAdmin});
+      if (!result) 
+        {
+        return res.status(400).json({ message: "Failed to register user" });
+      }
+
       return res.status(201).json({ message: "User added successfully" });
     } 
     catch (error: any)
