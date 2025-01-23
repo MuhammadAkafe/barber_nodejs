@@ -14,7 +14,8 @@ export class GlobalQuery extends PostgreSqlConnection {
     catch (err) {
       console.error('Database query error:', err);
       throw new Error('Database query failed');
-    } finally 
+    } 
+    finally 
     {
         client.release();
     }

@@ -5,11 +5,12 @@ export default class tokenHandler {
   private readonly refreshTokenOptions: SignOptions;
   private readonly PRIVATE_KEY: string;
   private readonly PUBLIC_KEY: string;
+  private Payload;
 
-  constructor() {
+  constructor(payload:Record<any,string>) {
     this.accessTokenOptions = { algorithm: "RS256", expiresIn: "7d" };
     this.refreshTokenOptions = { algorithm: "RS256", expiresIn: "7d" };
-
+    this.Payload=payload
     // Ensure the keys are properly formatted (replace escaped newlines if present)
     if (!process.env.PRIVATE_KEY || !process.env.PUBLIC_KEY) 
         {
@@ -19,9 +20,9 @@ export default class tokenHandler {
     this.PUBLIC_KEY = process.env.PUBLIC_KEY as string
   }
 
-  generateAccessToken(payload: Record<any, string>): string {
+  generateAccessToken(): string {
     try {
-      return jwt.sign(payload, this.PRIVATE_KEY, this.accessTokenOptions);
+      return jwt.sign(this.Payload, this.PRIVATE_KEY, this.accessTokenOptions);
     } 
     catch (error) {
       console.error("Error generating access token:", error);
@@ -29,9 +30,10 @@ export default class tokenHandler {
     }
   }
 
-  generateRefreshToken(payload: Record<any, string>): string {
+  generateRefreshToken(): string 
+  {
     try {
-      return jwt.sign(payload, this.PRIVATE_KEY, this.refreshTokenOptions);
+      return jwt.sign(this.Payload, this.PRIVATE_KEY, this.refreshTokenOptions);
     }
      catch (error:any) {
       console.error("Error generating refresh token:", error.message);
@@ -44,7 +46,8 @@ export default class tokenHandler {
      
       const decoded = jwt.verify(token, this.PUBLIC_KEY) as JwtPayload;
       return decoded; 
-    } catch (error: any) {
+    } 
+    catch (error: any) {
       console.error("Error verifying token:", error.message); 
       return null; 
     }

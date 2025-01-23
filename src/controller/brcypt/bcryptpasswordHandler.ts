@@ -7,13 +7,25 @@ dotenv.config();
 
 export default class bcryptPasswordHandler 
 {
-    async hashPassword(password: string): Promise<string> {
-      return await bcrypt.hash(password, 10)
+  private Password: string;
+  private hashedPassword?: string;
+  constructor(password:string,hashedpassword?:string)
+  {
+    this.Password=password
+    this.hashedPassword=hashedpassword
+  }
+    async hashPassword(): Promise<string > {
+
+      return  bcrypt.hash(this.Password, 10)
     }
   
     // Compare passwords
-     async comparePasswords(password: string, hashedPassword: string): Promise<boolean> {
-      return await bcrypt.compare(password, hashedPassword);
+    async comparePasswords(): Promise<boolean> 
+    {
+        if (!this.hashedPassword) {
+            throw new Error('Hashed password is not provided');
+        }
+        return bcrypt.compare(this.Password, this.hashedPassword);
     }
   
 }

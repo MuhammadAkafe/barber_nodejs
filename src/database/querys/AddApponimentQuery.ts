@@ -1,3 +1,4 @@
+import { RoleData } from '../../interfaces/RoleData';
 import { GlobalQuery } from './GlobalQuery';
 import dayjs from 'dayjs';
 
@@ -14,7 +15,8 @@ export default class AddApponiment extends GlobalQuery {
     public roleFor: string;
 
 
-    constructor(userID:string, userName:string, slot_date:null|dayjs.Dayjs, city:string, barber:string, phoneNumber:string, roleFor:string) {
+
+    constructor({userID, userName, slot_date, city, barber, phoneNumber, roleFor}:RoleData) {
         super();
         this.userID= userID;
         this.userName = userName;   
@@ -25,16 +27,12 @@ export default class AddApponiment extends GlobalQuery {
         this.roleFor = roleFor;
     }
 
+
     public async AddApponiment(): Promise<any> 
     {
         try {
             const query = `SELECT add_appointment($1, $2, $3, $4, $5, $6, $7)`;
-            const result = await this.query(query, [this.userID, this.userName, this.slot_date, this.city, this.barber, this.phoneNumber, this.roleFor]);
-            if (result.rowCount > 0) {
-                return { message: "Appointment successfully booked.",isRoleAdded:true };
-            } else {
-                return { message: "Failed to book appointment.",isRoleAdded:false };
-            }
+            return  this.query(query, [this.userID, this.userName, this.slot_date, this.city, this.barber, this.phoneNumber, this.roleFor]);
         } 
         catch (error: any) {
             console.error(error);

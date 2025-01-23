@@ -1,51 +1,44 @@
 import { Request, Response } from "express";
 import {GlobalQuery} from "../../database/querys/GlobalQuery"; // Assuming queryService is your base class for querying the database.
 import bcryptPasswordHandler from "../brcypt/bcryptpasswordHandler";
-import {CheckifUserExists} from "../../database/querys/checkIfUserExistsQuery";
+import {CheckifUserExists} from "../../database/querys/checkUserExistsQuery";
 import AddUser from "../../database/querys/AddUserQuery";
+import { Auth } from "../../interfaces/Auth";
 
 
-export default class Register extends GlobalQuery {
-  private Hashing:bcryptPasswordHandler
-  private checkifUserExists: CheckifUserExists;
-  private addUser:AddUser
-  constructor() {
-    super();
-     this.Hashing=new bcryptPasswordHandler()
-      this.checkifUserExists=new CheckifUserExists()
-      this.addUser=new AddUser()
-  }
-  
-  
 
-  public async AddUser(req: Request, res: Response): Promise<Response<Record<string, string>>> {
+   export async function addUser(req: Request, res: Response): Promise<Response<Record<string, string>>> {
     try {
-      const { username, password, email, confirm_password, phonenumber, isAdmin }= req.body;
-  
+      const { username, password, email, confirm_password, phonenumber, isAdmin }:Auth= req.body;
+
       // Input validation
       if (!username || !password || !email || !confirm_password || !phonenumber) {
         return res.status(400).json({ message: "All fields are required"});
       }
   
       // Password match validation
-      if (password !== confirm_password) {
+      if (password !== confirm_password) 
+        {
         return res.status(400).json({ message: "Passwords do not match" });
       }
   
       // Hash the password
-      const hashedPassword = await this.Hashing.hashPassword(password);
-  
-      const UserExist=await this.checkifUserExists.userExists(email)
+      const Hashing=new bcryptPasswordHandler(password);
+      const hashedPassword = await Hashing.hashPassword();
+      const UserExists=new CheckifUserExists(email)
+
+      const UserExist=await UserExists.userExists()
+
       if (UserExist) 
         { // Assuming the function returns a boolean
         return res.status(409).json({ message: "User already exists"}); // 409 for conflict
       }
 
-      const result=this.addUser.addUser({username, email, phonenumber, hashedPassword, isAdmin});
-      if (!result) 
-        {
-        return res.status(400).json({ message: "Failed to register user" });
-      }
+      
+      const register={username, email,hashedPassword,phonenumber, isAdmin};
+
+       const addUser:AddUser=new AddUser(register)
+       addUser.addUser();
 
       return res.status(201).json({ message: "User added successfully" });
     } 
@@ -54,7 +47,3 @@ export default class Register extends GlobalQuery {
       return res.status(500).json({ message: `Failed to register user: ${error.message}`});
     }
   }
-  
-
-
-}

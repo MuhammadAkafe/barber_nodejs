@@ -1,23 +1,24 @@
 import { GlobalQuery } from './GlobalQuery';
 
+import { RoleData } from '../../interfaces/RoleData';
+
+type deletedata=Pick<RoleData,  'slot_date' | 'userID'>;
+
 export default class deleteApponiment extends GlobalQuery 
 {
-    constructor() {
+    private userID
+    private slot_date
+    constructor({userID, slot_date }:deletedata) 
+    {
         super();
+        this.userID = userID;
+        this.slot_date = slot_date;
     }
 
-    public async deleteApponiment(userID: string, date: Date): Promise<any> {
+    public async deleteApponiment(): Promise<any> {
         try {
-            const query = `SELECT delete_appointment($1, $2) as success`; ;
-            const result = await this.query(query, [userID, date]);
-            const success = result.rows[0]?.success;
-            if (!success) 
-              {
-              return ({ message: "No appointment found to delete.", isApponimentDeleted: false });
-            }
-            else {
-                return ({ message: "Appointment successfully deleted.", isApponimentDeleted: true });       
-            }
+            const query = `SELECT delete_appointment($1, $2) `; ;
+            await this.query(query, [this.userID, this.slot_date]);
         } 
         catch (error: any) {
             console.error(error);

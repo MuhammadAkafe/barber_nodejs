@@ -15,7 +15,7 @@ export const RefreshToken = (req: Request, res: Response): Response => {
             return res.status(500).json({ message: 'Server configuration error' });
         }
 
-        const tokenHandler = new TokenHandler();
+        const tokenHandler = new TokenHandler({}); // Pass an empty object or appropriate payload
 
         // Verify the refresh token
      const decoded = tokenHandler.verifyToken(refreshToken);
@@ -24,7 +24,8 @@ export const RefreshToken = (req: Request, res: Response): Response => {
         {
         return res.status(403).json({ message: 'Invalid or expired refreshToken' });
     }
-        const newAccessToken = tokenHandler.generateAccessToken({UserID:decoded.id});
+
+        const newAccessToken = tokenHandler.generateAccessToken();
         return res.json({ accessToken: newAccessToken });
     }
     catch (err) 

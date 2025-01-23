@@ -9,7 +9,7 @@ exports.up = async function(knex) {
     table.string('phonenumber').notNullable();
     table.string('barber').notNullable();
     table.string('city').notNullable
-    table.string('slot_date').notNullable();
+    table.timestamp('slot_date',{useTz:false}).notNullable();
     table.string('rolefor').notNullable();
   })
 };

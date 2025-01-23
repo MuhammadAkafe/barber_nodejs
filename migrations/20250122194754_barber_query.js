@@ -2,10 +2,8 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.up =async function(knex) {
-  return await knex.schema.alterTable('appointments', (table) => {
-    table.timestamp('slot_date').notNullable().alter();
-  })
+exports.up = function(knex) {
+    return knex.raw(`SELECT * FROM barbers`);
 };
 
 /**
@@ -13,5 +11,6 @@ exports.up =async function(knex) {
  * @returns { Promise<void> }
  */
 exports.down = function(knex) {
-
+    // Add rollback logic here if needed
+    return Promise.resolve();
 };

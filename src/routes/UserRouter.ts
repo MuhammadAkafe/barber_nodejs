@@ -1,11 +1,10 @@
-import { User } from '../interfaces/User';
 import express, { Router, Request, Response } from 'express';
 import {Add_Apponiment} from '../controller/UserService/Add_Apponiment';
 import { EditApponiment } from '../controller/UserService/EditApponiment';
 import { DeleteApponiment } from '../controller/UserService/DeleteApponiment';
 
 
-export default class  UserRouter implements User  
+export default class  UserRouter 
 {
     router:Router
     constructor()

@@ -1,18 +1,16 @@
-import { Admin } from "../interfaces/Admin";
-import DeleteAllUsers from '../controller/AdminService/deleteallUsers/deleteAllUsers';
 import express, { Router, Request, Response } from 'express';
-export class AdminRouter implements Admin
+import { DeleteAllUsers } from '../controller/AdminService/deleteAllUsers';
+import { addbarber } from '../controller/AdminService/Addbarber';
+
+export class AdminRouter 
 {
-    private DeleteAllUsers: DeleteAllUsers;
     public router: Router;
-    
     constructor(){
         this.router = express.Router();
-        this.DeleteAllUsers = new DeleteAllUsers();
+        this.initializeRoutes();
     }
-
     initializeRoutes(){
-        this.router.delete('/DeleteAllUsers', (req: Request, res: Response) => {this.DeleteAllUsers.DeleteAllUsers(req, res)});
+        this.router.delete('/DeleteAllUsers', (req: Request, res: Response) => {DeleteAllUsers(req, res)});
+        this.router.post('/Addbarber', (req: Request, res: Response) => {addbarber(req, res)});
     }
-
 }
