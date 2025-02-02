@@ -1,8 +1,7 @@
 import express, { Router, Request, Response } from 'express';
 import {Add_Apponiment} from '../controller/UserService/Add_Apponiment';
-import { EditApponiment } from '../controller/UserService/EditApponiment';
 import { DeleteApponiment } from '../controller/UserService/DeleteApponiment';
-
+import { GetAllAppointments } from '../controller/UserService/GetAllAppointments';
 
 export default class  UserRouter 
 {
@@ -12,10 +11,11 @@ export default class  UserRouter
         this.router = express.Router();
         this.initializeRoutes();
     }
-    initializeRoutes(){
+    initializeRoutes()
+    {
         //this.router.use(authenticateToken);
-        this.router.post('/AddApponiment',  (req: Request, res: Response) =>{Add_Apponiment(req, res)});
-        this.router.patch('/EditApponiment', (req: Request, res: Response) => {EditApponiment(req, res)});
-        this.router.delete('/DeleteApponiment', (req: Request, res: Response) => {DeleteApponiment(req, res)});
+        this.router.post('/AddAppointment',  (req: Request, res: Response) =>{Add_Apponiment(req, res)});
+        this.router.delete('/DeleteAppointment', (req: Request, res: Response) => {DeleteApponiment(req, res)});
+        this.router.get('/GetallAppointments', (req: Request, res: Response) => {GetAllAppointments(req, res)});
     }
 }

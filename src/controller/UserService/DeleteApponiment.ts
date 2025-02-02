@@ -1,22 +1,25 @@
 import { Response, Request } from "express";
-import deleteApponiment from "../../database/querys/DeleteApponimentQuery";
+import deleteApponiment from "../../database/querys/User/DeleteApponimentQuery";
+
+
 
 
     export async function DeleteApponiment(req: Request, res: Response): Promise<Response> 
     {
     try {
-      const { userID, slot_date } = req.body;
-
+      const { user_id, slot_date } = req.body;
+      
       // Validate input
-      if (!userID || !slot_date) {
+      if (!user_id || !slot_date) 
+        {
         return res.status(400).json({ message: "UserId and SoltTime are required." });
-      }
-       const DeleteApponiment = new deleteApponiment({userID, slot_date });
+        }
+       const DeleteApponiment = new deleteApponiment({user_id, slot_date });
        DeleteApponiment.deleteApponiment();
-
       return res.status(200).json({ message: "Appointment successfully deleted." });
       
-    } catch (error: any) {
+    } 
+    catch (error: any) {
       // Handle errors and provide detailed feedback
       return res.status(500).json({ message: `Error deleting appointment: ${error.message}` });
     }

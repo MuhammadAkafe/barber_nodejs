@@ -52,8 +52,8 @@ module.exports.up = function (knex) {
       END IF;
 
       -- Insert the new appointment
-      INSERT INTO appointments(userid, username, slot_date, city, barber, phonenumber, rolefor)
-      VALUES (_userid, _username, _slot_date, _city, _barber, _phonenumber, _rolefor);
+      INSERT INTO appointments(userid, username, slot_date, city, phonenumber,barber,rolefor)
+      VALUES (_userid, _username, _slot_date, _city , _phonenumber,_barber, _rolefor);
     END;
     $$ LANGUAGE plpgsql;
   `);

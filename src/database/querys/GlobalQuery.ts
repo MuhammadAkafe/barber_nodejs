@@ -1,6 +1,13 @@
 import { PoolClient } from "pg";
 import { PostgreSqlConnection } from "../connections/pgconnection";
 
+class DatabaseQueryError extends Error {
+    constructor(message: string) {
+        super(message);
+        this.name = "DatabaseQueryError";
+    }
+}
+
 export class GlobalQuery extends PostgreSqlConnection {
   constructor() {
     super();
@@ -11,9 +18,9 @@ export class GlobalQuery extends PostgreSqlConnection {
     try {
       return await client.query(queryText, values);
     } 
-    catch (err) {
-      console.error('Database query error:', err);
-      throw new Error('Database query failed');
+    catch (err:any) 
+    {
+      throw new DatabaseQueryError(`${err.message}`);
     } 
     finally 
     {

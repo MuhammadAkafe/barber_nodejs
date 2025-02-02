@@ -1,16 +1,15 @@
 import { Response, Request } from "express";
+import DeleteAllUserQuery from "../../database/querys/Admin/deleteAllUserQuery";
 
-import DeleteAllUserQuery from "../../database/querys/deleteAllUserQuery";
-
-
-  export async function  DeleteAllUsers(req: Request, res: Response): Promise<Response> {
+export async function DeleteAllUsers(req: Request, res: Response): Promise<Response> 
+{
     try {
-      const deleteUsers=new DeleteAllUserQuery()
-     const  users=deleteUsers.delete_all_users_query();
-      return res.status(200).json({ message: "All users have been successfully deleted.",users:users });
+        const deleteUsers = new DeleteAllUserQuery();
+        const result = await deleteUsers.delete_all_users_query();
+        return res.status(200).json({ message: "All users have been successfully deleted.", result });
     } 
-    catch (error: any) {
-      // Handle errors and provide detailed feedback
-      return res.status(500).json({ message: `Error deleting all users: ${error.message}` });
+    catch (error: any) 
+    {
+        return res.status(500).json({ message: `Error deleting users: ${error.message}` });
     }
 }

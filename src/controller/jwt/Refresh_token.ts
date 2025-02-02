@@ -1,11 +1,12 @@
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
 import TokenHandler from './jwtTokenHandler';
 
 export const RefreshToken = (req: Request, res: Response): Response => {
     try {
         const refreshToken = req.cookies?.refreshToken;
-        if (!refreshToken) {
+        if (!refreshToken) 
+            {
             return res.status(401).json({ message: 'Refresh token not provided' });
         }
         const Public_key = process.env.PUBLIC_KEY;
@@ -15,7 +16,7 @@ export const RefreshToken = (req: Request, res: Response): Response => {
             return res.status(500).json({ message: 'Server configuration error' });
         }
 
-        const tokenHandler = new TokenHandler({}); // Pass an empty object or appropriate payload
+        const tokenHandler = new TokenHandler(); // Pass an empty object or appropriate payload
 
         // Verify the refresh token
      const decoded = tokenHandler.verifyToken(refreshToken);

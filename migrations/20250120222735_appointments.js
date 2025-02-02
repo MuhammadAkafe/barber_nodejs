@@ -4,11 +4,12 @@
  */
 exports.up = async function(knex) {
  return await knex.schema.createTable('appointments', (table) => {  
-    table.increments('userid').primary();
+  table.increments(`appointment_id`).notNullable().unique()
+    table.integer('userid').notNullable;
     table.string('username').notNullable();
     table.string('phonenumber').notNullable();
     table.string('barber').notNullable();
-    table.string('city').notNullable
+    table.string('city').notNullable;
     table.timestamp('slot_date',{useTz:false}).notNullable();
     table.string('rolefor').notNullable();
   })

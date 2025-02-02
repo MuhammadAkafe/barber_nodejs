@@ -7,7 +7,8 @@ export default class tokenHandler {
   private readonly PUBLIC_KEY: string;
   private Payload;
 
-  constructor(payload:Record<any,string>) {
+  constructor(payload?:Record<any,string>) 
+  {
     this.accessTokenOptions = { algorithm: "RS256", expiresIn: "7d" };
     this.refreshTokenOptions = { algorithm: "RS256", expiresIn: "7d" };
     this.Payload=payload
@@ -20,8 +21,11 @@ export default class tokenHandler {
     this.PUBLIC_KEY = process.env.PUBLIC_KEY as string
   }
 
-  generateAccessToken(): string {
+  generateAccessToken(): string | null {
     try {
+      if(!this.Payload){
+        return null
+      }
       return jwt.sign(this.Payload, this.PRIVATE_KEY, this.accessTokenOptions);
     } 
     catch (error) {
@@ -30,12 +34,16 @@ export default class tokenHandler {
     }
   }
 
-  generateRefreshToken(): string 
+  generateRefreshToken(): string |null
   {
     try {
+      if(!this.Payload){
+        return null
+      }
       return jwt.sign(this.Payload, this.PRIVATE_KEY, this.refreshTokenOptions);
     }
-     catch (error:any) {
+     catch (error:any) 
+     {
       console.error("Error generating refresh token:", error.message);
       throw new Error("Failed to generate refresh token.");
     }

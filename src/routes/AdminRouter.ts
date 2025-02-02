@@ -9,7 +9,8 @@ export class AdminRouter
         this.router = express.Router();
         this.initializeRoutes();
     }
-    initializeRoutes(){
+    initializeRoutes()
+    {
         this.router.delete('/DeleteAllUsers', (req: Request, res: Response) => {DeleteAllUsers(req, res)});
         this.router.post('/Addbarber', (req: Request, res: Response) => {addbarber(req, res)});
     }
