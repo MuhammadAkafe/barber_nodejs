@@ -16,12 +16,12 @@
   "name": "Barber",
   "version": "1.0.0",
   "main": "Main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --exec ts-node src/Main.ts",
-    "start": "node --exec ts-node src/Main.ts",
-    "build": "npm install && npx knex migrate:latest"
-  },
+"scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "dev": "nodemon --exec ts-node src/Main.ts",
+  "start": "node --exec ts-node src/Main.ts",
+  "build": "npm install && npx knex migrate:latest"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
