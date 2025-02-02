@@ -5,12 +5,13 @@ module.exports = {
   development: {
     client: 'postgresql',
     connection: {
-      host: "localhost",
-      database: 'barber',
-      user: 'postgres',
-      password: '!postgres!',
-      port: 5432,
-      timezone: 'UTC'
+      host: process.env.DB_HOST,
+      database: process.env.DB_NAME,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      port: process.env.PORT,
+      timezone: 'UTC',
+      timeout: 10000, 
     },
     migrations: {
       directory: `./migrations`, // Directory for migration files
