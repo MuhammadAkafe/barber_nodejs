@@ -13,7 +13,7 @@ module.exports = {
       database: process.env.DB_NAME,
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
-      port: process.env.PORT,
+      port: process.env.PORT || 5432,
       timezone: 'UTC',
       timeout: 10000, 
     },
