@@ -8,6 +8,8 @@ import { AdminRouter } from './routes/AdminRouter';
 
 dotenv.config();
 
+
+
 const app = express();
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }));
@@ -37,11 +39,11 @@ app.use(Adminrouter.router);
 
 
 
-
-app.listen(5000, (err?: Error) => {
+const port  =process.env.PORT || 5000
+app.listen(port, (err?: Error) => {
     if (err) {
         console.log("Error in server setup");
     } else {
-        console.log(`Server running at http://localhost:5000`);
+        console.log(`Server running at http://localhost:${port}`);
     }
 });
