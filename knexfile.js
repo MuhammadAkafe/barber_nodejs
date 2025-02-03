@@ -9,13 +9,15 @@ module.exports = {
   development: {
     client: 'postgresql',
     connection: {
-      host: '127.0.0.1',
-      database: process.env.DB_NAME,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      port: 5432,
-      timezone: 'UTC',
-      timeout: 10000, 
+      // host: '127.0.0.1',
+      // database: process.env.DB_NAME,
+      // user: process.env.DB_USER,
+      // password: process.env.DB_PASSWORD,
+      // port: 5432,
+      // timezone: 'UTC',
+      // timeout: 10000, 
+      connectionString: 'postgresql://neondb_owner:npg_lxf4u2pSjeoZ@ep-white-glade-a8usy78u-pooler.eastus2.azure.neon.tech/barber?sslmode=require',
+      ssl: { rejectUnauthorized: false }, // Required for Neon
     },
     migrations: {
       directory: `./migrations`, // Directory for migration files

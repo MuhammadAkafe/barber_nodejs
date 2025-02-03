@@ -6,7 +6,7 @@ export default class DeleteAllUserQuery extends GlobalQuery {
     }
 
     public async delete_all_users_query() {
-        const query = `DELETE FROM users8`;
+        const query = `DELETE FROM users`;
         try {
             const result = await this.query(query);
             return result;
