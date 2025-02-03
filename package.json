@@ -16,12 +16,12 @@
   "name": "Barber",
   "version": "1.0.0",
   "main": "Main.js",
-"scripts": {
-  "test": "echo \"Error: no test specified\" && exit 1",
-  "dev": "nodemon --exec ts-node src/Main.ts",
-  "start": "node ts-node src/Main.ts",
-  "build": "npm install && npm install -g knex && knex migrate:latest"
-},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --exec ts-node src/Main.ts",
+    "start": "node ts-node src/Main.ts",
+    "build": "npm install && npm install -g knex && knex migrate:latest"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -32,18 +32,16 @@
     "@types/cors": "^2.8.17",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^5.0.0",
-    "@types/node": "^22.7.5",
+    "@types/node": "^22.13.0",
     "@types/nodemon": "^1.19.6",
     "@types/pg": "^8.11.10",
     "fs": "^0.0.1-security",
     "knex": "^3.1.0",
     "path": "^0.12.7",
     "ts-node": "^10.9.2",
-    "typescript": "^5.6.2"
+    "typescript": "^5.7.3"
   },
-  
-"engines": {
-  "node": "18.17.0"
-}
-
+  "engines": {
+    "node": "18.17.0"
+  }
 }

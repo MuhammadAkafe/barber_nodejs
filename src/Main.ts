@@ -38,7 +38,7 @@ app.use(Adminrouter.router);
 
 
 
-app.listen(5001, (err?: Error) => {
+app.listen(5000, (err?: Error) => {
     if (err) {
         console.log("Error in server setup");
     } else {
