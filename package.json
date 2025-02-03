@@ -17,6 +17,7 @@
   "version": "1.0.0",
   "main": "Main.js",
   "scripts": {
+    "prestart": "chmod +x node_modules/.bin/ts-node",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --exec ts-node src/Main.ts",
     "start": "npx ts-node src/Main.ts",
