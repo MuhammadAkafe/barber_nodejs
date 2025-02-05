@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -16,7 +16,7 @@ export default class bcryptPasswordHandler
   }
     async hashPassword(): Promise<string > {
 
-      return  bcrypt.hash(this.Password, 10)
+      return bcrypt.hash(this.Password, 10);
     }
   
     // Compare passwords
