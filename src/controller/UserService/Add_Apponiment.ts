@@ -17,3 +17,4 @@ export async function Add_Apponiment(req: Request, res: Response): Promise<Respo
         return res.status(500).json({ message: `Failed to book appointment: ${error.message}` });
     }
 }
+
