@@ -16,7 +16,7 @@ module.exports = {
       // port: 5432,
       // timezone: 'UTC',
       // timeout: 10000, 
-      connectionString: 'postgresql://neondb_owner:npg_lxf4u2pSjeoZ@ep-white-glade-a8usy78u-pooler.eastus2.azure.neon.tech/barber?sslmode=require',
+      connectionString: process.env.connectionString,
       ssl: { rejectUnauthorized: false }, // Required for Neon
     },
     migrations: {
