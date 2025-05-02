@@ -1,6 +1,7 @@
 import jwt, { JwtPayload, SignOptions } from "jsonwebtoken";
 
-export default class tokenHandler {
+export default class tokenHandler 
+{
   private readonly accessTokenOptions: SignOptions;
   private readonly refreshTokenOptions: SignOptions;
   private readonly PRIVATE_KEY: string;
@@ -23,12 +24,14 @@ export default class tokenHandler {
 
   generateAccessToken(): string | null {
     try {
-      if(!this.Payload){
+      if(!this.Payload)
+        {
         return null
       }
       return jwt.sign(this.Payload, this.PRIVATE_KEY, this.accessTokenOptions);
     } 
-    catch (error) {
+    catch (error) 
+    {
       console.error("Error generating access token:", error);
       throw new Error("Failed to generate access token.");
     }
@@ -37,7 +40,8 @@ export default class tokenHandler {
   generateRefreshToken(): string |null
   {
     try {
-      if(!this.Payload){
+      if(!this.Payload)
+        {
         return null
       }
       return jwt.sign(this.Payload, this.PRIVATE_KEY, this.refreshTokenOptions);
@@ -46,10 +50,12 @@ export default class tokenHandler {
      {
       console.error("Error generating refresh token:", error.message);
       throw new Error("Failed to generate refresh token.");
+      return null 
     }
   }
 
-  verifyToken(token: string): JwtPayload | null {
+  verifyToken(token: string): JwtPayload | null 
+  {
     try {
      
       const decoded = jwt.verify(token, this.PUBLIC_KEY) as JwtPayload;

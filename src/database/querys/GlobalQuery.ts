@@ -1,20 +1,17 @@
 import { PoolClient } from "pg";
-import { PostgreSqlConnection } from "../connections/pgconnection";
-
+import { createPool,disconnect } from "../connections/pgconnection";
 class DatabaseQueryError extends Error {
-    constructor(message: string) {
+    constructor(message: string) 
+    {
         super(message);
         this.name = "DatabaseQueryError";
     }
 }
 
-export class GlobalQuery extends PostgreSqlConnection {
-  constructor() {
-    super();
-  }
 
-  async query(queryText: string, values?: any[]): Promise<any> {
-    const client: PoolClient = await this.pool.connect();
+  export async function globalQuery(queryText: string, values?: any[]): Promise<any> 
+  {
+    const client: PoolClient = await createPool();
     try {
       return await client.query(queryText, values);
     } 
@@ -27,4 +24,3 @@ export class GlobalQuery extends PostgreSqlConnection {
         client.release();
     }
   }
-}

@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import AddAppointment from "../../database/querys/User/AddApponimentQuery";
+import AddAppointment from "../../database/querys/UserQuery/AddApponimentQuery";
 import { appointmentsdata } from "../../interfaces/RoleData";
 
 

@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import deleteApponiment from "../../database/querys/User/DeleteApponimentQuery";
+import deleteApponiment from "../../database/querys/UserQuery/DeleteApponimentQuery";
 
 
 

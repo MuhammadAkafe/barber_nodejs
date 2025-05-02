@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import bcryptPasswordHandler from "../brcypt/bcryptpasswordHandler";
-import { CheckifUserExists } from "../../database/querys/User/checkUserExistsQuery";
-import AddUser from "../../database/querys/User/AddUserQuery";
+import { CheckifUserExists } from "../../database/querys/UserQuery/UserExists";
+import AddUser from "../../database/querys/UserQuery/AddUserQuery";
 import { RegisterForm } from "../../interfaces/Auth";
 
 export async function addUser(req: Request, res: Response): Promise<Response> {

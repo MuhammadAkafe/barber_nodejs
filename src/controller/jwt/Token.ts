@@ -5,7 +5,8 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
   try {
     // التحقق من وجود الهيدر Authorization
     const authHeader = req.headers.authorization;
-    if (!authHeader) {
+    if (!authHeader) 
+      {
       res.status(401).json({ message: 'Unauthorized: Missing Authorization header' });
       return;
     }
@@ -25,7 +26,6 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
       return;
     }
 
-    // التحقق من صحة التوكن باستخدام TokenHandler
     const TokenHandler = new tokenHandler();
     const decoded = TokenHandler.verifyToken(token);
 
@@ -33,11 +33,11 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
       res.status(401).json({ message: 'Invalid or expired token' });
       return;
     }
-
-    // نجاح التحقق، الانتقال إلى الخطوة التالية
+    
     next();
-  } catch (error: any) {
-    // التعامل مع الأخطاء العامة
+  } 
+  catch (error: any) 
+  {
     console.error('Error in authenticateToken middleware:', error.message);
     res.status(500).json({ message: 'Internal server error', error: error.message });
   }

@@ -28,13 +28,6 @@ app.use(
 // Middleware to parse JSON
 app.use(express.json());
 
-const authRouter = new AuthRouter();
-const userRouter=new UserRouter()
-const Adminrouter=new AdminRouter()
-
-app.use(authRouter.router);
-app.use(userRouter.router);
-app.use(Adminrouter.router);
 
 
 

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { GetAllAppointmentsQuery } from '../../database/querys/User/GetAppointmentsQuery';
+import { GetAllAppointmentsQuery } from '../../database/querys/UserQuery/GetAppointmentsQuery';
 
 export const GetAllAppointments = async (req: Request, res: Response): Promise<Response> => 
     {
