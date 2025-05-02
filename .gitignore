@@ -1,3 +1,4 @@
 private_key
 public_key
-node_modules
+./node_modules
+.gitignore
