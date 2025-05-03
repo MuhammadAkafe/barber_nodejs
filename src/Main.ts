@@ -1,43 +1,38 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import  AuthRouter  from './routes/AuthRouter';
-import cors from 'cors'
+import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import AuthRouter from './routes/AuthRouter';
 import UserRouter from './routes/UserRouter';
-import { AdminRouter } from './routes/AdminRouter';
 
 dotenv.config();
 
-
-
-
 const app = express();
-app.use(cookieParser())
+const PORT = process.env.PORT || 5000;
+
+// Parse cookies
+app.use(cookieParser());
+
+// Parse URL-encoded form data
 app.use(express.urlencoded({ extended: true }));
 
-
-app.use(
-    cors({
-      origin: 'http://localhost:3000', // Replace with your frontend's origin
-      credentials: true, // Allow credentials (cookies)
-    })
-  );
-
-
-
-// Middleware to parse JSON
+// Parse JSON bodies
 app.use(express.json());
 
+// Enable CORS for frontend access with credentials (e.g. cookies)
+app.use(cors({
+  origin: 'http://localhost:3000', // ✅ Replace with your frontend's domain in production
+  credentials: true,
+}));
 
+// Mount your routers
 
+const auth_router= new AuthRouter().router;
+const userRouter=new UserRouter().router;
+app.use(auth_router); // Assuming AuthRouter exposes a `.router` object
+app.use(userRouter); // Assuming AuthRouter exposes a `.router` object
 
-
-
-const port  =process.env.PORT || 5000
-app.listen(port, (err?: Error) => {
-    if (err) {
-        console.log("Error in server setup");
-    } else {
-        console.log(`Server running at http://localhost:${port}`);
-    }
+// Start the server
+app.listen(PORT, () => {
+  console.log(`✅ Server running at http://localhost:${PORT}`);
 });

@@ -4,7 +4,6 @@ export interface Authentication {
      password:string;
      confirm_password:string
      email:string;
-     isAdmin:boolean;
      phonenumber:string;
      hashedPassword:string;
 }
@@ -12,5 +11,3 @@ export interface Authentication {
 
 export type RegisterForm = Pick<Authentication, 'username' | 'email' | 'phonenumber' | 'hashedPassword'>;
 
-
-export type login = Pick<Authentication , 'email' | 'password'>;

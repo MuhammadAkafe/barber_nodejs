@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import bcryptPasswordHandler from "../brcypt/bcryptpasswordHandler";
-import { CheckifUserExists } from "../../database/querys/UserQuery/UserExists";
-import AddUser from "../../database/querys/UserQuery/AddUserQuery";
 import { RegisterForm } from "../../interfaces/Auth";
+import { hashPassword } from "../brcypt/bcryptpasswordHandler";
+import { userExistsQuery } from "../../database/querys/UserQuery/UserExistsQuery";
+import { addUserQuery } from "../../database/querys/UserQuery/AddUserQuery";
 
-export async function addUser(req: Request, res: Response): Promise<Response> {
+export async function Register(req: Request, res: Response): Promise<Response> {
     try {
         const { username, password, email, confirm_password, phonenumber } = req.body;
 
@@ -19,19 +19,16 @@ export async function addUser(req: Request, res: Response): Promise<Response> {
         }
 
         // Hash the password
-        const passwordHandler = new bcryptPasswordHandler(password);
-        const hashedPassword = await passwordHandler.hashPassword();
+        const hashedPassword = await hashPassword(password);
 
         // Check if user already exists
-        const userExistsQuery = new CheckifUserExists(email);
-        const userExists = await userExistsQuery.userExists();
-        if (userExists) {
+        const UserExists = await userExistsQuery(email);
+        if (UserExists) {
             return res.status(409).json({ message: "User already exists" }); // 409 for conflict
         }
         // Prepare user data and add user
         const register: RegisterForm = { username, email, hashedPassword, phonenumber };
-        const addUserQuery = new AddUser(register);
-        await addUserQuery.addUser(); // Await the promise to ensure it's executed before proceeding
+        await addUserQuery(register); // Await the promise to ensure it's executed before proceeding
         return res.status(201).json({ message: "User added successfully" });
     } 
     catch (error: any) {

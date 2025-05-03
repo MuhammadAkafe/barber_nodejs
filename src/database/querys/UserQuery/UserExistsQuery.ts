@@ -9,7 +9,7 @@ class CheckUserExistsError extends Error
 }
 
 
- export async function userExists(Email:string): Promise<any | null> 
+ export async function userExistsQuery(Email:string): Promise<any | null> 
   {
     try {
       if(!Email) return null;

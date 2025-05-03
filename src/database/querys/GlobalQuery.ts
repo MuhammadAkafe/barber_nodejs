@@ -1,5 +1,5 @@
 import { PoolClient } from "pg";
-import { createPool,disconnect } from "../connections/pgconnection";
+import { createPool } from "../connections/pgconnection";
 class DatabaseQueryError extends Error {
     constructor(message: string) 
     {

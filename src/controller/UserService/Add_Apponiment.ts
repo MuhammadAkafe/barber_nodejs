@@ -1,15 +1,12 @@
 import { Response, Request } from "express";
-import AddAppointment from "../../database/querys/UserQuery/AddApponimentQuery";
-import { appointmentsdata } from "../../interfaces/RoleData";
-
+import { addAppointmentQuery } from "../../database/querys/UserQuery/AddApponimentQuery";
 
 
 export async function Add_Apponiment(req: Request, res: Response): Promise<Response> {
     try {
-        const appointmentData = req.body as appointmentsdata ;
-        
-        const AddApponiment = new AddAppointment(appointmentData);
-        await AddApponiment.addAppointment();
+        const appointmentData = req.body ;
+        console.log(appointmentData);
+        await addAppointmentQuery(appointmentData);
         return res.status(200).json({ message: "Appointment successfully booked." });
     } 
     catch (error: any) 

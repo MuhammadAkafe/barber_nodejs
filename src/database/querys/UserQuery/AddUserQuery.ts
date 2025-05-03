@@ -13,7 +13,8 @@ class AddUserError extends Error
     }
 }
 
-     async function addUser({ username, email, hashedPassword, phonenumber }: RegisterForm): Promise<data> {
+
+     export async function addUserQuery({ username, email, hashedPassword, phonenumber }: RegisterForm): Promise<data> {
         const query = `SELECT add_user($1, $2, $3, $4)`;
         try {
             if (!username || !email || !hashedPassword || !phonenumber) {

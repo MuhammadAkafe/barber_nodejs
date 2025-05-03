@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-export interface appointmentsdata {
+export interface AppointmentsData {
     user_id: string;
     user_name: string;
     slot_date: dayjs.Dayjs |null;
@@ -10,5 +10,3 @@ export interface appointmentsdata {
     role_for: string;
 }
 
-
-export type deletedata=Pick<appointmentsdata,  'slot_date' | 'user_id'>;

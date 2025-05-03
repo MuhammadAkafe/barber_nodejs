@@ -1,18 +1,17 @@
 import { Request, Response } from 'express';
 import { comparePasswords } from '../brcypt/bcryptpasswordHandler';
-import { userExists } from '../../database/querys/UserQuery/UserExists';
+import { userExistsQuery } from '../../database/querys/UserQuery/UserExistsQuery';
 import tokenHandler from '../jwt/jwtTokenHandler';
-import { login } from '../../interfaces/Auth';
 
 export async function Login(req: Request, res: Response): Promise<Response> {
   try {
-    const { email, password }: login = req.body;
+    const { email, password } = req.body;
 
     if (!email || !password) {
       return res.status(400).json({ message: "Email and password are required." });
     }
 
-    const user = await userExists(email); // await here!
+    const user = await userExistsQuery(email); // await here!
 
     if (!user) {
       return res.status(401).json({ message: "Invalid credentials." });
