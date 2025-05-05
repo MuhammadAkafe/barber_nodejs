@@ -8,7 +8,7 @@ export async function up(knex: Knex): Promise<void>
         table.increments("userid").primary(); // auto-incrementing unique ID
         table.string('username');
         table.string('email');
-        table.string('phone_number');
+        table.string('phonenumber');
         table.string('password');
       });
 }

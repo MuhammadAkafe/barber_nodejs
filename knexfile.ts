@@ -1,4 +1,4 @@
-import type { Knex } from "knex";
+import  { Knex } from "knex";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -16,8 +16,8 @@ const config: { [key: string]: Knex.Config } = {
       directory: "./migrations",
       tableName: "knex_migrations"
     },
-    seeds:{
-      directory: './seeds'
+    seeds: {
+      directory: "./seeds"
     }
   },
 
@@ -54,4 +54,6 @@ const config: { [key: string]: Knex.Config } = {
   }
 };
 
+
+// Needed for CLI tools (e.g. knex migrate:latest)
 module.exports = config;

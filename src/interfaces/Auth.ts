@@ -1,5 +1,6 @@
 
-export interface Authentication {
+export interface Authentication 
+{
      username:string;
      password:string;
      confirm_password:string
