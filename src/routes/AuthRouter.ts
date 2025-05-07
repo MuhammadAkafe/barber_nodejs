@@ -12,10 +12,10 @@ class AuthRouter {
     this.initializeRoutes();
   }
 
-  private initializeRoutes() {
+  private initializeRoutes() 
+  {
     this.router.post('/Register', (req: Request, res: Response) => {Register(req, res)});
     this.router.post('/Login', (req: Request, res: Response) => {Login(req, res)});
-    this.router.post('/RefreshToken', (req: Request, res: Response) =>{RefreshToken(req,res)});
   }
 }
 
