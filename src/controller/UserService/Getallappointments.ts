@@ -12,7 +12,8 @@ export const Get_all_appointments = async (req: Request, res: Response) => {
 
     // ✅ استخدم التاريخ المرسل أو التاريخ الحالي
     let selectedDate = new Date(); // الآن
-    if (typeof date === "string" && /^\d{4}-\d{2}$/.test(date)) {
+    if (typeof date === "string" && /^\d{4}-\d{2}$/.test(date)) 
+      {
       const [year, month] = date.split("-").map(Number);
       selectedDate = new Date(year, month - 1); // اضبط التاريخ على أول يوم في الشهر
     }
@@ -35,7 +36,9 @@ export const Get_all_appointments = async (req: Request, res: Response) => {
       .orderBy("appointment_date", "asc")
       .orderBy("appointment_time", "asc");
 
-      
+      appointments.forEach(appointment => {
+        appointment.appointment_date = appointment.appointment_date.toISOString().split("T")[0];
+      });
 
     return res.status(200).json(appointments);
 

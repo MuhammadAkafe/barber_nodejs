@@ -22,12 +22,13 @@ export const Edit_appointment = async (req: Request, res: Response) => {
         if (selectedDateTime.getTime() < now.getTime()) 
             {
             return res.status(400).json({ message: "Appointment date/time cannot be in the past." });
-        }
+            }
 
         // 3. Check if appointment exists
         const existingAppointment = await db("appointments")
             .where("appointment_id", appointment_id)
             .first();
+
 
         if (!existingAppointment) {
             return res.status(404).json({ message: "Appointment not found." });
@@ -43,6 +44,7 @@ export const Edit_appointment = async (req: Request, res: Response) => {
         // 5. Validate time within working hours
         const openingTime = barber.opening_time; // "08:00"
         const closingTime = barber.closing_time; // "17:00"
+
         const time = appointment_time.trim();
 
         if (time < openingTime || time > closingTime) 
@@ -51,7 +53,7 @@ export const Edit_appointment = async (req: Request, res: Response) => {
         }
 
         // 6. Check for conflicting appointment (excluding this one)
-        const duplicate = await db("appointments")
+        const appointment_conflicting = await db("appointments")
             .where({
                 appointment_date,
                 appointment_time: time,
@@ -60,7 +62,8 @@ export const Edit_appointment = async (req: Request, res: Response) => {
             .andWhereNot("appointment_id", appointment_id)
             .first();
 
-        if (duplicate) {
+        if (appointment_conflicting) 
+            {
             return res.status(400).json({ message: "Another appointment already exists at this time." });
         }
 

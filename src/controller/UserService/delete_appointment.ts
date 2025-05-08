@@ -20,7 +20,7 @@ export const delete_appointment = async (req: Request, res: Response) => {
         await db("appointments")
             .where("appointment_id", appointment_id)
             .del();
-
+            
         return res.status(200).json({ message: "Appointment deleted successfully" });
     } 
     catch (error) 

@@ -38,7 +38,9 @@ export async function Add_Apponiment(req: Request, res: Response) {
 
     // 2. Check if the appointment is not in the past
     if (selectedDateTime < currentDateTime) {
-      throw new Error("Appointment date/time cannot be in the past.");
+     return res.status(400).json({
+        message: "Appointment date/time cannot be in the past",
+     })
     }
 
     // 3. Check if the barber exists
@@ -48,7 +50,7 @@ export async function Add_Apponiment(req: Request, res: Response) {
 
     if (!barber) 
       {
-      throw new Error("This barber ID does not exist.");
+     return res.status(404).json({ message: "This barber  does not exist" });
     }
 
     // 4. Check if the appointment time is within the barber's working hours
@@ -58,7 +60,9 @@ export async function Add_Apponiment(req: Request, res: Response) {
 
     if (appointmentTimeOnly < openingTime || appointmentTimeOnly > closingTime) 
       {
-      throw new Error("This appointment is outside the barber's working hours.");
+     return  res.status(400).json({
+        message: "This appointment is outside the barber's working hours",
+      });
       }
 
     // 5. Check if an exact appointment already exists
@@ -71,27 +75,26 @@ export async function Add_Apponiment(req: Request, res: Response) {
       .first();
 
       
-    if (existing) {
-      throw new Error("This appointment already exists.");
+    if (existing) 
+      {
+     return res.status(400).json({ message: "Another appointment already exists at this time." });
     }
 
     // 6. Check for conflicting appointment based on barber's slot time
-    const minutesForSlot = barber.minutes_for_solt;
 
-    const conflict = await db("appointments")
-      .where("appointment_date", appointment_date)
-      .andWhere("barber_id", barber_id)
-      .andWhereRaw(
-        `ABS(EXTRACT(EPOCH FROM (appointment_time::time - ?::time))) < ?`,
-        [appointmentTimeOnly, minutesForSlot * 60]
-      )
-      .first();
+    const mintesforappointment = barber.minutes_for_appointment;
 
-    if (conflict) {
-      throw new Error(
-        `This appointment conflicts with another (less than ${minutesForSlot} minutes apart).`
-      );
+    // التحقق من أن الوقت المُدخل يقع ضمن فاصل زمني مسموح
+    const [_, minute] = appointmentTimeOnly.split(":").map(Number);
+    
+    if (minute % mintesforappointment !== 0) 
+      {
+        return res.status(400).
+        json({
+          message: `Invalid time. Appointment time must be in ${mintesforappointment}-minute intervals (e.g., 18:00, 18:${mintesforappointment}, etc).`
+        });
     }
+
 
     // 7. Insert the new appointment
     await db("appointments").insert({

@@ -2,18 +2,19 @@ import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
 import TokenHandler from './jwtTokenHandler';
 
-export const RefreshToken = (req: Request, res: Response): Response => {
+export const RefreshToken = (req: Request, res: Response): Response => 
+    {
     try {
         const refreshToken = req.cookies?.refreshToken;
         if (!refreshToken) 
             {
             return res.status(401).json({ message: 'Refresh token not provided' });
-        }
+            }
+
         const Public_key = process.env.PUBLIC_KEY;
         if (!Public_key) 
             {
-            console.error('PUBLIC_KEY key is missing in environment variables');
-            return res.status(500).json({ message: 'Server configuration error' });
+            return res.status(400).json({ message: 'PUBLIC_KEY key is missing' });
         }
 
         const tokenHandler = new TokenHandler(); // Pass an empty object or appropriate payload
@@ -24,14 +25,13 @@ export const RefreshToken = (req: Request, res: Response): Response => {
     if (!decoded || !decoded.id) 
         {
         return res.status(403).json({ message: 'Invalid or expired refreshToken' });
-    }
+        }
 
         const newAccessToken = tokenHandler.generateAccessToken();
         return res.json({ accessToken: newAccessToken });
     }
     catch (err) 
     {
-        console.error('Error verifying refresh token:', err);
 
         // Handle specific JWT errors
         if (err instanceof jwt.TokenExpiredError) {

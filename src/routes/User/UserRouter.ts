@@ -1,8 +1,9 @@
 import express, { Router, Request, Response } from 'express';
-import {Add_Apponiment} from '../controller/UserService/Add_Appointment';
-import { delete_appointment } from '../controller/UserService/delete_appointment';
-import { Edit_appointment } from '../controller/UserService/edit_Appointment';
-import { Get_all_appointments } from '../controller/UserService/Getallappointments';
+import {Add_Apponiment} from '../../controller/UserService/Add_Appointment';
+import { delete_appointment } from '../../controller/UserService/delete_appointment';
+import { Edit_appointment } from '../../controller/UserService/edit_Appointment';
+import { Get_all_appointments } from '../../controller/UserService/Getallappointments';
+
 
 export default class  UserRouter 
 {

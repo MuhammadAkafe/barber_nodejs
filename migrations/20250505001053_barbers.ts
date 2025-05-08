@@ -14,7 +14,7 @@ export async function up(knex: Knex): Promise<void>
         table.time("opening_time").notNullable();
         table.time("closing_time").notNullable();
         table.string("image").notNullable();
-        table.integer("minutes_for_solt").notNullable().defaultTo(15);
+        table.integer("minutes_for_appointment").notNullable().defaultTo(15);
         table.string("barber_description").nullable();
     });
 }
