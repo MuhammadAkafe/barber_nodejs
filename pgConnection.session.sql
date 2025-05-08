@@ -7,3 +7,6 @@ SELECT * from appointments
 DELETE from appointments
 
 select * from users
+
+
+delete from barbers where barber_id = 4
