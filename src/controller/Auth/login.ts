@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { comparePasswords } from '../brcypt/bcryptpasswordHandler';
-import tokenHandler from '../jwt/jwtTokenHandler';
+import { comparePasswords } from '../../brcypt/bcryptpasswordHandler';
+import tokenHandler from '../../jwt/jwtTokenHandler';
 import db from '../../database/pgconnection';
 export async function Login(req: Request, res: Response): Promise<Response> {
     try {

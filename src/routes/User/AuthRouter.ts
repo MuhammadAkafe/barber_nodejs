@@ -1,6 +1,6 @@
 import express, { Router, Request, Response } from 'express';
 import { Register } from '../../controller/Auth/Register';
-import { RefreshToken } from '../../controller/jwt/Refresh_token';
+import { RefreshToken } from '../../jwt/Refresh_token';
 import { Login } from '../../controller/Auth/login';
 
 class AuthRouter {

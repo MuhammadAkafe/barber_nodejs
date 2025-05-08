@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { hashPassword } from "../brcypt/bcryptpasswordHandler";
+import { hashPassword } from "../../brcypt/bcryptpasswordHandler";
 import db from "../../database/pgconnection";  // استبدال pgconnection بـ knex
 
 export async function Register(req: Request, res: Response): Promise<Response> {

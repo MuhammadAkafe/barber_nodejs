@@ -1,5 +1,5 @@
 import express, { Router, Request, Response } from 'express';
-import { Getallappointmentsbarber } from '../../controller/barber/get_all_appointment';
+import { add_barber } from '../../controller/Admin/add_barber';
 export default class  UserRouter 
 {
     router:Router
@@ -11,6 +11,6 @@ export default class  UserRouter
     initializeRoutes()
     {
         //this.router.use(authenticateToken);
-        this.router.get('/Getallappointmentsbarber',  (req: Request, res: Response) =>{Getallappointmentsbarber(req, res)});
+        this.router.post('/addbarber',  (req: Request, res: Response) =>{add_barber(req, res)});
     }
 }

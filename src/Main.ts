@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser';
 import AuthRouter from './routes/User/AuthRouter';
 import UserRouter from './routes/User/UserRouter';
 import BarberRouter from './routes/barber/BarberRouter';
-
+import AdminRouter from './routes/Admin/AdminRouter';
 dotenv.config();
 
 const app = express();
@@ -31,9 +31,11 @@ app.use(cors({
 const auth_router= new AuthRouter().router;
 const userRouter=new UserRouter().router;
 const barberRouter=new BarberRouter().router; 
+const Admin_router=new AdminRouter().router; 
 app.use(auth_router); 
 app.use(userRouter); 
 app.use(barberRouter); 
+app.use(Admin_router); 
 
 // Start the server
 app.listen(Server_PORT, () => {
