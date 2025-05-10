@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import { comparePasswords } from '../../brcypt/bcryptpasswordHandler';
-import tokenHandler from '../../jwt/jwtTokenHandler';
 import db from '../../database/pgconnection';
+import { generateAccessToken } from '../../jwt/Token';
+import { generateRefreshToken } from '../../jwt//Token';
 export async function Login(req: Request, res: Response): Promise<Response> {
     try {
         const { email, password } = req.body;
@@ -25,10 +26,9 @@ export async function Login(req: Request, res: Response): Promise<Response> {
         const { userid: UserID, phonenumber: Phonenumber, username: UserName } = userData;
 
         const payload = { UserID, Phonenumber, UserName };
-        const TokenHandler = new tokenHandler(payload);
 
-        const access_token = TokenHandler.generateAccessToken();
-        const refresh_token = TokenHandler.generateRefreshToken();
+        const access_token = generateAccessToken(payload);
+        const refresh_token = generateRefreshToken(payload);
 
         return res.cookie("refreshToken", refresh_token, {
             httpOnly: true,

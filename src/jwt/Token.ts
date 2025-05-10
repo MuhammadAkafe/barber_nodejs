@@ -1,45 +1,83 @@
 import { Request, Response, NextFunction } from 'express';
-import tokenHandler from './jwtTokenHandler';
+import jwt, { JwtPayload, SignOptions } from "jsonwebtoken";
 
-export const authenticateToken = (req: Request, res: Response, next: NextFunction):void => {
+// Config
+const PRIVATE_KEY: string = process.env.PRIVATE_KEY || '';
+const PUBLIC_KEY: string = process.env.PUBLIC_KEY || '';
+
+const accessTokenOptions: SignOptions = { algorithm: "RS256", expiresIn: "15m" };
+const refreshTokenOptions: SignOptions = { algorithm: "RS256", expiresIn: "7d" };
+
+// Middleware to authenticate token
+export const authenticateToken = (req: Request, res: Response, next: NextFunction): void | Response<any, Record<string, any>> => {
   try {
-    // التحقق من وجود الهيدر Authorization
     const authHeader = req.headers.authorization;
-    if (!authHeader) 
-      {
-       res.status(401).json({ message: 'Unauthorized: Missing Authorization header' });
-       return
+    if (!authHeader) {
+      return res.status(401).json({ message: 'Unauthorized: Missing Authorization header' });
     }
 
-    // استخراج التوكن من الهيدر
     const token = authHeader.split(' ')[1];
     if (!token) {
-       res.status(401).json({ message: 'Unauthorized: Token not found in header' });
-       return
+      return res.status(401).json({ message: 'Unauthorized: Token not found in header' });
     }
 
-    // التأكد من وجود المفتاح العام
-    const Public_key = process.env.PUBLIC_KEY;
-    if (!Public_key) {
+    if (!PUBLIC_KEY) {
       console.error('PUBLIC_KEY is missing in environment variables');
-       res.status(500).json({ message: 'Server configuration error: Missing PUBLIC_KEY' });
-       return
+      return res.status(500).json({ message: 'Server configuration error: Missing PUBLIC_KEY' });
     }
 
-    const TokenHandler = new tokenHandler();
-    const decoded = TokenHandler.verifyToken(token);
-
+    const decoded = verifyToken(token);
     if (!decoded) {
-        res.status(401).json({ message: 'Invalid or expired token' });
-        return
+      return res.status(401).json({ message: 'Invalid or expired token' });
     }
-    
-     next();
-  } 
-  
-  catch (error: any) 
-  {
+
+    // Optionally attach decoded payload to request
+    // req.user = decoded;
+
+    return next();
+  } catch (error: any) {
     console.error('Error in authenticateToken middleware:', error.message);
     res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+};
+
+// Generate Access Token
+export const generateAccessToken = (payload: Record<string, any> | undefined): string | null => {
+  try {
+    if (!payload) return null;
+    if (!PRIVATE_KEY) {
+      console.error('PRIVATE_KEY is missing in environment variables');
+      return null;
+    }
+    return jwt.sign(payload, PRIVATE_KEY, accessTokenOptions);
+  } catch (error) {
+    console.error("Error generating access token:", error);
+    return null;
+  }
+};
+
+// Generate Refresh Token
+export const generateRefreshToken = (payload: Record<string, any> | undefined): string | null => {
+  try {
+    if (!payload) return null;
+    if (!PRIVATE_KEY) {
+      console.error('PRIVATE_KEY is missing in environment variables');
+      return null;
+    }
+    return jwt.sign(payload, PRIVATE_KEY, refreshTokenOptions);
+  } 
+  catch (error: any) {
+    console.error("Error generating refresh token:", error.message);
+    return null;
+  }
+};
+
+// Verify Token
+export const verifyToken = (token: string): JwtPayload | null => {
+  try {
+    return jwt.verify(token, PUBLIC_KEY, { algorithms: ['RS256'] }) as JwtPayload;
+  } catch (error: any) {
+    console.error("Error verifying token:", error.message);
+    return null;
   }
 };
